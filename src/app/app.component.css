@@ -1,0 +1,17 @@
+.body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Tela meio apagada */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Certifique-se de que esteja acima de outros elementos dentro do componente */
+  }

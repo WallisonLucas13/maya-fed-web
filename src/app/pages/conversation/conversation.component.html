@@ -1,0 +1,47 @@
+<div class="container">
+
+  <div class="maya-content">
+    <span class="maya-header-logo">
+      MAYA
+    </span>
+  </div>
+
+  <div #messageContainer class="conversation-container">
+    <div *ngFor="let date of getDates()">
+      <div class="date-divider">{{ date }}</div>
+      <div *ngFor="let message of groupedMessages[date]" class="message">
+        <app-card-message [message]="message"></app-card-message>
+      </div>
+    </div>
+
+    <div *ngIf="isMessageLoading" class="dots-container">
+      <div class="container-system">
+        <span class="maya-logo">Maya</span>
+      </div>
+      <app-loading-dots class="dots"></app-loading-dots>
+    </div>
+  </div>
+
+  <div class="arrow-down-container">
+    <mat-icon class="arrow-down" matTooltip="Descer ao fim da conversa" (click)="scrollToBottom()">expand_circle_down</mat-icon>
+  </div>
+
+  <div class="input-wrapper">
+    <div class="input-container">
+      <div class="form-container">
+        <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <mat-icon class="icon-attachment">attach_file</mat-icon>
+          <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
+            (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"
+            class="form-control" placeholder='Digite sua mensagem' name="message" required />
+    
+          <button type="submit" class="button-send" [disabled]="isMessageLoading">
+            <mat-icon [ariaDisabled]="isMessageLoading" class="icon-send">send</mat-icon>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div #scrollTarget></div>
+</div>

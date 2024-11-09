@@ -1,0 +1,31 @@
+<div class="full-container">
+
+  <div class="all-container">
+  
+    <div class="container">
+      <span class="fale-com-span">Fale com a <span class="maya-span">Maya</span></span>
+
+      <span class="maya-desc">
+        Experimente a Maya! Faça perguntas e descubra respostas surpreendentes. Venha explorar o conhecimento!
+      </span>
+
+      <div class="form-container">
+        <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <mat-icon class="icon-attachment">attach_file</mat-icon>
+          <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
+            (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"
+            class="form-control" placeholder='Envie sua mensagem' name="message" required />
+  
+            <button type="submit" id="sendButton" class="send-button">
+               <mat-icon class="icon-send">send</mat-icon> 
+            </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="logo-container">
+      <div class="ai-icon"></div>
+      <div class="ai-text">Maya</div>
+    </div>
+  </div>
+</div>

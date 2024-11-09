@@ -1,0 +1,220 @@
+import { Component, ElementRef, EventEmitter, Inject, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConversasService } from '../../services/conversas/conversas.service';
+import { Conversa } from '../../models/conversation/conversa';
+import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { CardMessageComponent } from "../../components/card-message/card-message.component";
+import { Mensagem } from '../../models/conversation/mensagem';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingDotsComponent } from "../../components/loading-dots/loading-dots.component";
+import { LoadingService } from '../../services/loading/loading.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+@Component({
+  selector: 'app-conversation',
+  standalone: true,
+  imports: [
+    CommonModule,
+    CardMessageComponent,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    LoadingDotsComponent,
+    MatTooltipModule
+  ],
+  templateUrl: './conversation.component.html',
+  styleUrl: './conversation.component.css'
+})
+export class ConversationComponent {
+  @ViewChild('messageContainer') private messageContainer!: ElementRef;
+  @ViewChild('scrollTarget') private scrollTarget?: ElementRef;
+  @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
+
+  conversationId: string | null = null;
+  conversation?: Conversa;
+  groupedMessages: { [key: string]: Mensagem[] } = {};
+  username: string = "Wallison"
+  datePipe = new DatePipe('pt-BR');
+  messageForm: FormGroup;
+  isMessageLoading: boolean = false;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private conversasService: ConversasService,
+    private loadingService: LoadingService,
+  ) {
+    registerLocaleData(localePt, 'pt-BR');
+    this.messageForm = new FormGroup({
+      message: new FormControl('', Validators.required)
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const isNewConversation = sessionStorage.getItem('isNewConversation');
+      if(!isNewConversation){
+        if (params.get('id') !== 'new') {
+          this.conversationId = params.get('id');
+          this.getConversation();
+        } else {
+          this.handleNewConversation();
+        }
+      }else{
+        sessionStorage.removeItem('isNewConversation');
+      }
+    });
+  }
+
+
+  handleNewConversation() {
+    const promise = this.conversasService.getNewConversation().getValue();
+    this.conversation = {
+      id: '',
+      username: this.username,
+      title: '',
+      messages: [],
+      createdAt: new Date()
+    };
+
+    this.addUserMessage(promise.userMessage);
+    this.isMessageLoading = true;
+
+    promise.systemSubscription.then(response => {
+      const systemMessage = response.data;
+      this.conversationId = systemMessage.conversationId;
+      sessionStorage.setItem('isNewConversation', "true");
+      sessionStorage.setItem('lastConversationId', this.conversationId);
+
+      this.conversasService.getConversation(this.conversationId, this.username)
+        .then(response => {
+          this.conversation = response.data;
+          this.conversation.messages = [];
+          this.addUserMessage(promise.userMessage);
+          this.addSystemMessage(systemMessage);
+
+          this.isMessageLoading = false;
+          this.conversasService.emitUpdateConversations();
+          this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
+        })
+
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 500)
+    })
+  }
+
+  getConversation() {
+    this.loadingService.show();
+    if (this.conversationId) {
+      this.conversasService.getConversation(this.conversationId, this.username)
+        .then(response => {
+          this.conversation = response.data;
+          this.groupMessagesByDate();
+
+          setTimeout(() => {
+            this.scrollToBottom();
+            this.loadingService.hide();
+          }, 800)
+        })
+    }
+  }
+
+  groupMessagesByDate(): void {
+    this.groupedMessages = this.conversation?.messages.reduce((groups, message) => {
+      const dateKey = this.isToday(new Date(message.createdAt))
+        ? 'Hoje'
+        : this.datePipe.transform(new Date(message.createdAt), 'dd \'de\' MMMM \'de\' yyyy', 'pt-BR');
+      if (dateKey) {
+        if (!groups[dateKey]) {
+          groups[dateKey] = [];
+        }
+        groups[dateKey].push(message);
+      }
+      return groups;
+    }, {} as { [key: string]: Mensagem[] }) ?? {};
+  }
+
+  getDates(): string[] {
+    return Object.keys(this.groupedMessages);
+  }
+
+  isToday(date: Date): boolean {
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  }
+
+  sendMessage() {
+    if (this.messageForm.valid) {
+      this.isMessageLoading = true;
+      const message = this.messageForm.get('message')?.value;
+      this.messageForm.reset();
+      this.addUserMessage(message);
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 200)
+
+      this.conversasService
+        .sendMessage(this.conversationId ?? '', this.username, message)
+        .then(response => {
+          this.isMessageLoading = false;
+          this.addSystemMessage(response.data);
+          this.conversasService.emitUpdateConversations();
+
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 500)
+        })
+    }
+  }
+
+  addUserMessage(messageText: string) {
+    this.conversation?.messages.push({
+      conversationId: this.conversationId ?? '',
+      id: Math.random().toString(36).substr(2, 9),
+      type: 'USER',
+      message: messageText,
+      createdAt: new Date()
+    });
+    this.groupMessagesByDate();
+  }
+
+  addSystemMessage(message: Mensagem) {
+    this.conversation?.messages.push({
+      conversationId: message.conversationId,
+      id: message.id,
+      type: message.type,
+      message: message.message,
+      createdAt: new Date
+    });
+    this.groupMessagesByDate();
+  };
+
+  scrollToBottom(): void {
+    try {
+      this.scrollTarget?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    } catch (err) {
+      console.error('Scroll to bottom failed', err);
+    }
+  }
+
+  scrollToTop(): void {
+    try {
+      this.scrollTopTarget?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    } catch (err) {
+      console.error('Scroll to top failed', err);
+    }
+  }
+}

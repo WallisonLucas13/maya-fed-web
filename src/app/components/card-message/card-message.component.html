@@ -1,0 +1,18 @@
+<div class="content">
+    <div class="logo-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
+        <div *ngIf="message?.type === 'SYSTEM'" class="container-system">
+            <span class="maya-logo">Maya</span>
+        </div>
+        <div *ngIf="message?.type === 'USER'" class="container-user">
+            <mat-icon aria-hidden="false" aria-label="person" fontIcon="account_circle"></mat-icon>
+        </div>
+    </div>
+
+    <div class="card-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
+        <div class="infos-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
+            <markdown #cardMessage class="card-message" [data]="message?.message"></markdown>
+            <div class="card-date">
+                <span>{{message?.createdAt | date:'HH:mm'}}</span>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,248 @@
+.full-container{
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.maya-content{
+    background-color: transparent;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    font-size: 15pt;
+    width: 100%;
+    top: 0;                
+  }
+  .maya-header-logo {
+    font-family: 'Arial', sans-serif; /* Defina a fonte desejada */
+    font-weight: bold;
+    color: #c0bcbc; /* Cor mais escura que o fundo para dar o efeito de imersão */
+    text-transform: uppercase; /* Se preferir que fique em maiúsculas */
+    position: relative; /* Necessário para posicionar as sombras de forma precisa */
+    padding: 20px; /* Espaço em torno da logo para melhorar o efeito */
+    display: inline-block; /* Garante que o tamanho da logo seja controlado */
+  }
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:center;
+  gap: 60px;
+  width: 60%;
+  height: 100%;
+  border-right: 1px solid none;
+  background-color: #fff;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.fale-com-span{
+    font-size: 19pt;
+    color: #555;
+}
+
+.maya-span {
+  font-weight: bold;
+  font-size: 19pt;
+  background: linear-gradient(45deg, purple, pink, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.maya-desc{
+  margin-left: 3em;
+  margin-right: 3em;
+  font-size: 12pt;
+  color: #555;
+}
+
+.form-container {
+  overflow-x: hidden;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+  border-radius: 30px;
+}
+
+.sendMessage-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  width: 100%;
+  height: 50px;
+}
+
+.sendMessage-form input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+  font-size: 14px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.sendMessage-form.error input{
+  flex: 1;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+.sendMessage-form input::placeholder {
+  font-size: 12pt;
+  color: #aaa; /* Placeholder em cinza claro */
+  overflow-x: hidden;
+}
+
+.sendMessage-form.error input::placeholder{
+  font-size: 12pt;
+  color: red; /* Placeholder em cinza claro */
+  overflow-x: hidden;
+}
+
+.error-message {
+  color: red; /* Cor da mensagem de erro */
+  font-size: 12px; /* Tamanho da fonte da mensagem de erro */
+  margin-top: 5px; /* Espaçamento acima da mensagem de erro */
+}
+
+.send-button {
+   display: flex; 
+   justify-content: center; 
+   align-items: center; 
+   border: none; 
+   background-color: transparent;
+   margin-right: 1em;
+  } 
+.icon-send {
+   width: 24px; 
+   height: 24px;
+  }
+.icon-send:hover{
+  cursor: pointer;
+  color: purple;
+}
+
+.icon-attachment{
+  color: #392d69; /* Cor dos ícones */
+  font-size: 22px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.icon-attachment:hover{
+  color: #000; /* Muda a cor ao passar o mouse */
+}
+
+.all-container{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: space-between;
+  width: 70%;
+  height: 60%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+  border-radius: 30px;
+}
+
+.logo-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 100%;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes pulseAI {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+.ai-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, purple, pink);
+  position: relative;
+  animation: pulseAI 3s infinite ease-in-out;
+}
+
+.ai-icon::before, .ai-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.5;
+}
+
+.ai-icon::before {
+  width: 25px;
+  height: 25px;
+  top: 10px;
+  left: 10px;
+}
+
+.ai-icon::after {
+  width: 25px;
+  height: 25px;
+  top: 10px;
+  right: 10px;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 10px purple, 0 0 20px pink, 0 0 30px white;
+  }
+  50% {
+    text-shadow: 0 0 20px purple, 0 0 30px pink, 0 0 40px white;
+  }
+  100% {
+    text-shadow: 0 0 10px purple, 0 0 20px pink, 0 0 30px white;
+  }
+}
+
+.ai-text {
+  font-size: 3rem;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: white;
+  animation: textGlow 2s infinite alternate;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
