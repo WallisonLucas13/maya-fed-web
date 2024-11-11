@@ -1,20 +1,26 @@
 <mat-drawer-container class="example-container">
 
-    <mat-drawer mode="side" opened>
-        <div class="maya-card" (click)="redirectToNewConversation()">
-           <span class="maya-span">Maya AI</span>
-           <span class="maya-iniciar-conversa">Iniciar nova conversa</span>
-        </div>
-        <div #scrollTopTarget></div>
-        <div class="conversas-container" *ngFor="let conversaPreview of conversasPreview">
-            <app-card-conversa-preview 
-            [conversaPreview]="conversaPreview"
-            [isSelected]="conversaPreview.id === selectedConversationId"
-            (cardClick)="handleCardClick($event)">
-            </app-card-conversa-preview>
-        </div>
-    </mat-drawer>
-    <mat-drawer-content class="router-content">
-      <router-outlet />
-    </mat-drawer-content>
-  </mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <div class="maya-card" (click)="redirectToNewConversation()">
+      <span class="maya-span">Maya AI</span>
+      <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
+    </div>
+
+    <div class="drawer" *ngIf="!authService.isLoggedIn()">
+      <div class="avatar-container">
+        <img src="maya-ft.webp" alt="Avatar do usuário" class="avatar">
+        <p class="welcome-message">Bem-vindo ao <span>Maya AI</span>!</p>
+      </div>
+    </div>
+
+    <div #scrollTopTarget></div>
+    <div class="conversas-container" *ngFor="let conversaPreview of conversasPreview">
+      <app-card-conversa-preview [conversaPreview]="conversaPreview"
+        [isSelected]="conversaPreview.id === selectedConversationId" (cardClick)="handleCardClick($event)">
+      </app-card-conversa-preview>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="router-content">
+    <router-outlet />
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -11,6 +11,7 @@ import { LoadingDotsComponent } from '../../components/loading-dots/loading-dots
 import { ConversasService } from '../../services/conversas/conversas.service';
 import { Router } from '@angular/router';
 import { LoadingService } from '../../services/loading/loading.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-new-conversation',
@@ -26,7 +27,7 @@ export class NewConversationComponent {
   constructor(
     private conversasService: ConversasService,
     private router: Router,
-    private loadingService: LoadingService
+    public authService: AuthService
   ) {
     this.messageForm = new FormGroup({
       message: new FormControl('', Validators.required)
@@ -39,10 +40,16 @@ export class NewConversationComponent {
       this.messageForm.get('message')?.reset();
 
       const promisse = this.conversasService
-        .sendMessageToNewConversation(this.username, message);
+        .sendMessageToNewConversation(message);
 
       this.conversasService.setNewConversation(message, promisse);
       this.router.navigate(['/conversation', 'new']);
     }
   }
+
+  logout(){
+    this.authService.logout();
+    sessionStorage.removeItem('lastConversationId');
+  }
+
 }

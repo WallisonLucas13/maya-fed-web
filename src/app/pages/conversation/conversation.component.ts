@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingDotsComponent } from "../../components/loading-dots/loading-dots.component";
 import { LoadingService } from '../../services/loading/loading.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-conversation',
@@ -41,7 +42,6 @@ export class ConversationComponent {
   conversationId: string | null = null;
   conversation?: Conversa;
   groupedMessages: { [key: string]: Mensagem[] } = {};
-  username: string = "Wallison"
   datePipe = new DatePipe('pt-BR');
   messageForm: FormGroup;
   isMessageLoading: boolean = false;
@@ -51,6 +51,7 @@ export class ConversationComponent {
     private route: ActivatedRoute,
     private conversasService: ConversasService,
     private loadingService: LoadingService,
+    public authService: AuthService
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
@@ -74,12 +75,16 @@ export class ConversationComponent {
     });
   }
 
+  logout(){
+    this.authService.logout();
+    sessionStorage.removeItem('lastConversationId');
+  }
 
   handleNewConversation() {
     const promise = this.conversasService.getNewConversation().getValue();
     this.conversation = {
       id: '',
-      username: this.username,
+      username: '',
       title: '',
       messages: [],
       createdAt: new Date()
@@ -94,7 +99,7 @@ export class ConversationComponent {
       sessionStorage.setItem('isNewConversation', "true");
       sessionStorage.setItem('lastConversationId', this.conversationId);
 
-      this.conversasService.getConversation(this.conversationId, this.username)
+      this.conversasService.getConversation(this.conversationId)
         .then(response => {
           this.conversation = response.data;
           this.conversation.messages = [];
@@ -115,7 +120,7 @@ export class ConversationComponent {
   getConversation() {
     this.loadingService.show();
     if (this.conversationId) {
-      this.conversasService.getConversation(this.conversationId, this.username)
+      this.conversasService.getConversation(this.conversationId)
         .then(response => {
           this.conversation = response.data;
           this.groupMessagesByDate();
@@ -167,7 +172,7 @@ export class ConversationComponent {
       }, 200)
 
       this.conversasService
-        .sendMessage(this.conversationId ?? '', this.username, message)
+        .sendMessage(this.conversationId ?? '', message)
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);

@@ -1,0 +1,17 @@
+<div class="register-container">
+    <div class="register-box">
+        <h2>Crie sua conta</h2>
+        <form [formGroup]="registrationForm" (ngSubmit)="register()">
+            <label for="username">Username:</label>
+            <input type="text" id="username" formControlName="username" placeholder="Insira seu username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" formControlName="password" placeholder="Insira sua senha" required>
+            
+            <button type="submit">Registrar</button>
+        </form>
+        <div class="login-link">
+            Já tem uma conta? <a href="/login">Faça login</a>
+        </div>
+    </div>
+</div>

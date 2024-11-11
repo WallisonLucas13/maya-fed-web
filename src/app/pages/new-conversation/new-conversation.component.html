@@ -1,10 +1,20 @@
 <div class="full-container">
 
+  <div class="conversation-header">
+    <span class="maya-header-logo">
+      MAYA
+    </span>
+
+    <div class="logout-container">
+      <span class="header-username">{{authService.username.getValue()}}</span>
+      <span class="logout-text" (click)="logout()">Sair</span>
+      <mat-icon class="logout" (click)="logout()">logout</mat-icon>
+    </div>
+  </div>
+
   <div class="all-container">
-  
     <div class="container">
       <span class="fale-com-span">Fale com a <span class="maya-span">Maya</span></span>
-
       <span class="maya-desc">
         Experimente a Maya! Faça perguntas e descubra respostas surpreendentes. Venha explorar o conhecimento!
       </span>
@@ -15,10 +25,10 @@
           <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
             (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"
             class="form-control" placeholder='Envie sua mensagem' name="message" required />
-  
-            <button type="submit" id="sendButton" class="send-button">
-               <mat-icon class="icon-send">send</mat-icon> 
-            </button>
+
+          <button type="submit" id="sendButton" class="send-button">
+            <mat-icon class="icon-send">send</mat-icon>
+          </button>
         </form>
       </div>
     </div>

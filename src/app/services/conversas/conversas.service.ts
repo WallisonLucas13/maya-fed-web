@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosHeaders, AxiosResponse } from 'axios';
 import { ConversaPreview } from '../../models/preview/conversa-preview';
 import {Environment} from '../../environments/environment';
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Conversa } from '../../models/conversation/conversa';
 import { Mensagem } from '../../models/conversation/mensagem';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { LoadingService } from '../loading/loading.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -18,30 +22,62 @@ export class ConversasService {
      systemSubscription: Promise.resolve({} as AxiosResponse<Mensagem, any>) 
   });
 
-  constructor() {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private loadingService: LoadingService,
+    private toastr: ToastrService
+  ) {
 
-  public getConversations(username: string): Promise<AxiosResponse<ConversaPreview[]>> {
-    const url: string = `${this.env.server.api_url}${this.env.paths.conversas}`;
-    const params = {username: username};
-    return axios.get<ConversaPreview[]>(url, {params: params});
+    this.authService.token.subscribe((token) => {
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        this.updateConversationsSubject.next();
+      } else {
+        axios.defaults.headers.common['Authorization'] = null;
+        this.updateConversationsSubject.next();
+        this.router.navigate(['/login']);
+      }
+    });
+
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 403) {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+          this.loadingService.hide();
+
+          this.toastr.error(error.response.data, 'Acesso Negado!', {
+            timeOut: 2000,
+            positionClass: 'toast-bottom-right'
+          });
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
-  public getConversation(conversationId: string, username: string): Promise<AxiosResponse<Conversa>> {
+  public getConversations(): Promise<AxiosResponse<ConversaPreview[]>> {
+    const url: string = `${this.env.server.api_url}${this.env.paths.conversas}`;
+    return axios.get<ConversaPreview[]>(url);
+  }
+
+  public getConversation(conversationId: string): Promise<AxiosResponse<Conversa>> {
     const url: string = `${this.env.server.api_url}${this.env.paths.conversa}`;
-    const params = {conversationId: conversationId, username: username};
+    const params = {conversationId: conversationId};
     return axios.get<Conversa>(url, {params: params});
   }
 
-  public sendMessage(conversationId: string, username: string, message: string): Promise<AxiosResponse<Mensagem>> {
+  public sendMessage(conversationId: string, message: string): Promise<AxiosResponse<Mensagem>> {
     const url: string = `${this.env.server.api_url}${this.env.paths.mensagem}`;
-    const params = {username: username, conversationId: conversationId};
+    const params = {conversationId: conversationId};
     return axios.post<Mensagem>(url, {message: message}, {params: params});
   }
 
-  public sendMessageToNewConversation(username: string, message: string): Promise<AxiosResponse<Mensagem>> {
+  public sendMessageToNewConversation(message: string): Promise<AxiosResponse<Mensagem>> {
     const url: string = `${this.env.server.api_url}${this.env.paths.mensagem}`;
-    const params = {username: username};
-    return axios.post<Mensagem>(url, {message: message}, {params: params});
+    return axios.post<Mensagem>(url, {message: message});
   }
 
   public emitUpdateConversations(): void {

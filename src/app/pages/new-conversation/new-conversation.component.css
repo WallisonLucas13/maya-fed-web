@@ -2,10 +2,60 @@
     overflow: hidden;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content:flex-start;
     flex-direction: column;
     align-items: center;
 }
+
+.conversation-header{
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15pt;
+  width: 100%;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  top: 0;               
+  background-color: #f0ecec;
+}
+
+.logout-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 2em;
+  gap: 0.5em;
+  font-size: 13pt;
+}
+
+.header-username{
+  color: #555;
+  margin-right: 1em;
+  padding: 0.2em 0.5em;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+}
+
+.all-container{
+  margin-top: 5em;
+}
+
+.logout-text{
+  color: red;
+  cursor: pointer;
+}
+
+.logout{
+  color: red;
+  cursor: pointer;
+}
+
+.logout-text:hover, .logout:hover{
+  text-decoration: underline;
+}
+
 .maya-content{
     background-color: transparent;
     height: 56px;
@@ -16,13 +66,16 @@
     top: 0;                
   }
   .maya-header-logo {
-    font-family: 'Arial', sans-serif; /* Defina a fonte desejada */
-    font-weight: bold;
-    color: #c0bcbc; /* Cor mais escura que o fundo para dar o efeito de imersão */
-    text-transform: uppercase; /* Se preferir que fique em maiúsculas */
-    position: relative; /* Necessário para posicionar as sombras de forma precisa */
-    padding: 20px; /* Espaço em torno da logo para melhorar o efeito */
-    display: inline-block; /* Garante que o tamanho da logo seja controlado */
+    color: #555;
+    text-transform: uppercase;
+    position: relative;
+    padding: 20px;
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    margin-left: 1em;
+    font-size: 13pt;
   }
 
 .container{

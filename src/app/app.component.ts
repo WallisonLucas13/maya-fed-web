@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, ElementRef} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HomeContainerComponent } from "./pages/home-container/home-container.component";
@@ -21,12 +21,16 @@ import { MarkdownConfigModule } from './configs/markdown-config.module';
 })
 export class AppComponent {
   title = 'mayaAI-fed-web';
+  @ViewChild('spark') private spark?: ElementRef;
+  sparkPosition: { x: number, y: number } = { x: 0, y: 0 };
+  sparkDirection: { dx: number, dy: number } = { dx: 1, dy: 1 };
+
   isGlobalLoading: boolean = false;
 
   constructor(private loadingService: LoadingService) { }
   ngOnInit(): void {
     this.loadingService.isLoading$.subscribe(isLoading => {
       this.isGlobalLoading = isLoading;
-    })
+    });
   }
 }
