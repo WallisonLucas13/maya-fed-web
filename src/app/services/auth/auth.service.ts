@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { Environment } from '../../environments/environment';
 import { Credentials } from '../../models/auth/user.credentials';
 import { BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../environments/environment';
+import { paths } from '../../environments/paths';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private env: Environment = new Environment();
   private isAuthenticated = false;
   token = new BehaviorSubject<string>('');
   username = new BehaviorSubject<string>('');
@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   register(credentials: Credentials){
-    const url: string = `${this.env.server.api_auth_url}${this.env.paths.register}`;
+    const url: string = `${environment.apiUrl}${paths.register}`;
     axios.post(url, credentials)
      .then((response) => {
         this.isAuthenticated = true;
@@ -49,7 +49,8 @@ export class AuthService {
   }
 
   login(credentials: Credentials){
-    const url: string = `${this.env.server.api_auth_url}${this.env.paths.login}`;
+    const url: string = `${environment.apiUrl}${paths.login}`;
+
     axios.post(url, credentials)
      .then((response) => {
         this.isAuthenticated = true;
@@ -58,7 +59,7 @@ export class AuthService {
 
         this.toastr.success('Login efetuado com sucesso!', `Seja bem vindo ${credentials.username}!`);
         
-        this.redirectAfterLogin();
+        setTimeout(() => {this.redirectAfterLogin()}, 500)
       })
       .catch(error => {
         if(error.response.status === 401){

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosHeaders, AxiosResponse } from 'axios';
 import { ConversaPreview } from '../../models/preview/conversa-preview';
-import {Environment} from '../../environments/environment';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Conversa } from '../../models/conversation/conversa';
 import { Mensagem } from '../../models/conversation/mensagem';
@@ -10,12 +9,13 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { LoadingService } from '../loading/loading.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../environments/environment';
+import { paths } from '../../environments/paths';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConversasService {
-  private env: Environment = new Environment();
   private updateConversationsSubject = new BehaviorSubject<void>(undefined);
   private newConversation = new BehaviorSubject<{userMessage: string, systemSubscription: Promise<AxiosResponse<Mensagem, any>>}>({
      userMessage: '', 
@@ -59,24 +59,24 @@ export class ConversasService {
   }
 
   public getConversations(): Promise<AxiosResponse<ConversaPreview[]>> {
-    const url: string = `${this.env.server.api_url}${this.env.paths.conversas}`;
+    const url: string = `${environment.apiUrl}${paths.conversas}`;
     return axios.get<ConversaPreview[]>(url);
   }
 
   public getConversation(conversationId: string): Promise<AxiosResponse<Conversa>> {
-    const url: string = `${this.env.server.api_url}${this.env.paths.conversa}`;
+    const url: string = `${environment.apiUrl}${paths.conversa}`;
     const params = {conversationId: conversationId};
     return axios.get<Conversa>(url, {params: params});
   }
 
   public sendMessage(conversationId: string, message: string): Promise<AxiosResponse<Mensagem>> {
-    const url: string = `${this.env.server.api_url}${this.env.paths.mensagem}`;
+    const url: string = `${environment.apiUrl}${paths.mensagem}`;
     const params = {conversationId: conversationId};
     return axios.post<Mensagem>(url, {message: message}, {params: params});
   }
 
   public sendMessageToNewConversation(message: string): Promise<AxiosResponse<Mensagem>> {
-    const url: string = `${this.env.server.api_url}${this.env.paths.mensagem}`;
+    const url: string = `${environment.apiUrl}${paths.mensagem}`;
     return axios.post<Mensagem>(url, {message: message});
   }
 
