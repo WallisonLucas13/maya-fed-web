@@ -3,8 +3,7 @@ import { Mensagem } from '../../models/conversation/mensagem';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MarkdownConfigModule } from '../../configs/markdown-config.module';
-import * as hljs from 'highlight.js'
-import 'highlight.js/styles/monokai.css';
+import hljs from 'highlight.js';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
@@ -28,7 +27,7 @@ export class CardMessageComponent {
   ngAfterViewInit() {
     setTimeout(() => {
       this.applyStyles();
-    }, 100)
+    }, 700)
   }
 
   applyStyles() {
@@ -65,7 +64,7 @@ export class CardMessageComponent {
       this.renderer.setStyle(codeElement, 'word-break', 'break-word');
       this.renderer.setStyle(codeElement, 'overflow-wrap', 'break-word');
       this.renderer.setStyle(codeElement, 'max-width', '100%');
-      hljs.default.highlightElement(codeElement);
+      hljs.highlightElement(codeElement);
     });
   }
 
