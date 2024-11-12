@@ -65,7 +65,7 @@ export class CardMessageComponent {
       this.renderer.setStyle(codeElement, 'word-break', 'break-word');
       this.renderer.setStyle(codeElement, 'overflow-wrap', 'break-word');
       this.renderer.setStyle(codeElement, 'max-width', '100%');
-      hljs.default.highlightElement(codeElement);
+      hljs.default.highlightBlock(codeElement);
     });
   }
 
