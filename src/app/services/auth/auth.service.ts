@@ -4,8 +4,8 @@ import axios from 'axios';
 import { Credentials } from '../../models/auth/user.credentials';
 import { BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../environments/environment';
-import { paths } from '../../environments/paths';
+import { environment } from '../../../environments/environment';
+import { paths } from '../../../environments/paths';
 
 @Injectable({
   providedIn: 'root'

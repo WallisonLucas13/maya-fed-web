@@ -9,8 +9,8 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { LoadingService } from '../loading/loading.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../environments/environment';
-import { paths } from '../../environments/paths';
+import { environment } from '../../../environments/environment';
+import { paths } from '../../../environments/paths';
 
 @Injectable({
   providedIn: 'root'
