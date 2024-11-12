@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 import { paths } from '../../../environments/paths';
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,18 @@ export class AuthService {
   token = new BehaviorSubject<string>('');
   username = new BehaviorSubject<string>('');
 
-  constructor(private router: Router, private toastr: ToastrService) {
+  constructor(
+    private router: Router, 
+    private toastr: ToastrService,
+    private loadingService: LoadingService
+  ) {
     this.recoverTokenFromSession();
   }
 
   register(credentials: Credentials){
     const url: string = `${environment.apiUrl}${paths.register}`;
+    this.loadingService.show();
+
     axios.post(url, credentials)
      .then((response) => {
         this.isAuthenticated = true;
@@ -28,21 +35,23 @@ export class AuthService {
         this.username.next(credentials.username);
 
         this.toastr.success('Conta criada com sucesso!', `Seja bem vindo ${credentials.username}!`, {
-          timeOut: 2000,
+          timeOut: 3000,
           positionClass: 'toast-bottom-center'
         });
         
         setTimeout(() => {
           this.redirectAfterLogin();
-        }, 500)
+          this.loadingService.hide();
+        }, 400)
       })
       .catch(error => {
         if(error.response.status === 400){
-          this.toastr.error(error.response.data, 'Dados Inválidos!', {
+          this.toastr.error(error.response.data, '', {
             timeOut: 2000,
             positionClass: 'toast-bottom-right'
           });
           this.isAuthenticated = false;
+          this.loadingService.hide();
           return;
         }
       })
@@ -50,6 +59,7 @@ export class AuthService {
 
   login(credentials: Credentials){
     const url: string = `${environment.apiUrl}${paths.login}`;
+    this.loadingService.show();
 
     axios.post(url, credentials)
      .then((response) => {
@@ -57,19 +67,24 @@ export class AuthService {
         this.token.next(response.data.token);
         this.username.next(credentials.username);
 
-        this.toastr.success('Login efetuado com sucesso!', `Seja bem vindo ${credentials.username}!`);
+        this.toastr.success('Login efetuado com sucesso!', `Seja bem vindo ${credentials.username}!`, {
+          timeOut: 3000
+        });
         
-        setTimeout(() => {this.redirectAfterLogin()}, 500)
+        setTimeout(() => {
+          this.redirectAfterLogin();
+          this.loadingService.hide();
+        }, 400)
       })
       .catch(error => {
         if(error.response.status === 401){
-          this.toastr.error(error.response.data, 'Credenciais Inválidas!', {
+          this.toastr.error(error.response.data, '', {
             timeOut: 2000,
             positionClass: 'toast-bottom-right'
           });
         }
-
         this.isAuthenticated = false;
+        this.loadingService.hide();
       })
   }
 
