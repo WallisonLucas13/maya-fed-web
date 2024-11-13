@@ -27,7 +27,7 @@ export class CardMessageComponent {
   ngAfterViewInit() {
     setTimeout(() => {
       this.applyStyles();
-    }, 700)
+    }, 200)
   }
 
   applyStyles() {

@@ -162,7 +162,7 @@ export class ConversationComponent {
   }
 
   sendMessage() {
-    if (this.messageForm.valid) {
+    if (this.messageForm.valid && this.loadingService.isHidden()) {
       this.isMessageLoading = true;
       const message = this.messageForm.get('message')?.value;
       this.messageForm.reset();

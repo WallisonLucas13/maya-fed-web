@@ -36,7 +36,7 @@ export class RegisterComponent {
       return;
     };
 
-    this.toastr.error('Preencha todos os campos!', 'Campos inválidos', {
+    this.toastr.warning('Preencha todos os campos!', 'Campos inválidos', {
       timeOut: 2000,
       positionClass: 'toast-bottom-right'
     });

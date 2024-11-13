@@ -15,5 +15,9 @@ export class LoadingService {
   hide() {
     this.loadingSubject.next(false);
   }
+
+  isHidden() {
+    return !this.loadingSubject.getValue();
+  }
   constructor() { }
 }
