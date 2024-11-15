@@ -104,7 +104,10 @@ export class HomeContainerComponent{
     this.selectedConversationId = id;
     sessionStorage.setItem('lastConversationId', id);
     this.router.navigate(['/conversation', id]);
-    this.drawerControlService.hideDrawer();
+    
+    if(this.drawerControlService.isAndroid.getValue()){
+      this.drawerControlService.hideDrawer();
+    }
   }
 
   redirectToNewConversation(){
@@ -112,7 +115,10 @@ export class HomeContainerComponent{
     sessionStorage.clear();
     this.selectedConversationId = '';
     this.router.navigate(['/conversation']);
-    this.drawerControlService.hideDrawer();
+
+    if(this.drawerControlService.isAndroid.getValue()){
+      this.drawerControlService.hideDrawer();
+    }
   }
 
   scrollToTop(): void {
