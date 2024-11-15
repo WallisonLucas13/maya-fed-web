@@ -148,15 +148,12 @@
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
-    width: 100%;
+    width: 90%;
     height: 50px;
     font-size: 15pt;
   }
   .all-container{
     display: flex;
-    flex-direction: row;
-    align-items:center;
-    justify-content: space-between;
     width: 90%;
     height: 60%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
@@ -168,13 +165,12 @@
     flex-direction: column;
     align-items: center;
     justify-content:center;
-    gap: 30px;
-    width: 90%;
+    gap: 50px;
+    width: 100%;
     height: 100%;
     border-right: 1px solid none;
     background-color: #fff;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    border-radius: 30px;
   }
 
   .ai-icon {
@@ -214,42 +210,6 @@
     text-shadow: 0 0 5px purple, 0 0 10px pink, 0 0 15px white;
   }
 }
-
-.logo-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20%;
-  height: 100%;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 2s forwards;
-}
-
-.ai-icon::before, .ai-icon::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: white;
-  opacity: 0.5;
-}
-
-.ai-icon::before {
-  width: 10px;
-  height: 10px;
-  top: 10px;
-  left: 10px;
-}
-
-.ai-icon::after {
-  width: 10px;
-  height: 10px;
-  top: 10px;
-  right: 10px;
-}
 .icon-send {
   width: 20px; 
   height: 20px;
@@ -264,13 +224,57 @@
  color: #392d69; /* Cor dos ícones */
  font-size: 19px;
  cursor: pointer;
- margin: 10px 10px;
  transition: color 0.3s;
 }
 
 .icon-attachment:hover{
  color: #000; /* Muda a cor ao passar o mouse */
 }
+
+.fale-com-container{
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ai-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, purple, pink);
+  position: relative;
+  animation: pulseAI 3s infinite ease-in-out;
+}
+.ai-icon::before, .ai-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.5;
+}
+
+.ai-icon::before {
+  width: 13px;
+  height: 13px;
+  top: 6px;
+  left: 6px;
+}
+
+.ai-icon::after {
+  width: 13px;
+  height: 13px;
+  top: 6px;
+  right: 6px;
+}
+.send-button {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  border: none; 
+  background-color: transparent;
+ } 
 }
 
 .sendMessage-form input {
@@ -278,10 +282,10 @@
   border: none;
   outline: none;
   background: transparent;
-  padding: 10px;
   font-size: 14px;
   overflow-x: hidden;
   box-sizing: border-box;
+  width: 90%;
 }
 
 .sendMessage-form.error input{
@@ -317,7 +321,7 @@
    align-items: center; 
    border: none; 
    background-color: transparent;
-   margin-right: 1em;
+   margin-right: 0.5em;
   } 
 
 @media (min-width: 1000px){
