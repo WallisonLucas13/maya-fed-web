@@ -111,6 +111,7 @@ export class HomeContainerComponent{
     sessionStorage.clear();
     this.selectedConversationId = '';
     this.router.navigate(['/conversation']);
+    this.drawerControlService.hideDrawer();
   }
 
   scrollToTop(): void {
