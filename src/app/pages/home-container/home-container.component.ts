@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, SimpleChanges, ViewChild, HostListener } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { ConversaPreview } from '../../models/preview/conversa-preview';
 import {MatDialog} from '@angular/material/dialog';
 import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../../services/auth/auth.service';
+import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 
 @Component({
   selector: 'app-home-container',
@@ -25,6 +26,7 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class HomeContainerComponent{
   @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
+  @ViewChild('drawer') private drawer?: ElementRef;
   
   username: string = 'Wallison';
   conversasPreview: ConversaPreview[] = [];
@@ -35,8 +37,13 @@ export class HomeContainerComponent{
   constructor(
     private conversasService: ConversasService,
     public authService: AuthService, 
-    private router: Router
+    private router: Router,
+    public drawerControlService: DrawerControlService
   ) {
+  }
+
+  ngAfterViewInit() {
+    this.onLoadWidthSize(window.innerWidth);
   }
 
   ngOnInit(): void {
@@ -104,6 +111,20 @@ export class HomeContainerComponent{
       this.scrollTopTarget?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
     } catch (err) {
       console.error('Scroll to top failed', err);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    const screenWidth = (event.target as Window).innerWidth;
+    this.onLoadWidthSize(screenWidth);
+  }
+
+  onLoadWidthSize(screenWidth: number){
+    if(screenWidth <= 900){
+      this.drawerControlService.hideDrawer();
+    }else{
+      this.drawerControlService.showDrawer();
     }
   }
 }

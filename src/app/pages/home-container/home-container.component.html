@@ -1,6 +1,9 @@
 <mat-drawer-container class="example-container">
 
-  <mat-drawer mode="side" opened>
+  <mat-drawer #drawer 
+    [mode]="drawerControlService.drawerMode.getValue()" 
+    [opened]="drawerControlService.drawerOpened.getValue()"
+  >
     <div class="maya-card" (click)="redirectToNewConversation()">
       <span class="maya-span">Maya AI</span>
       <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
