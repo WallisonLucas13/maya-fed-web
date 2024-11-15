@@ -108,6 +108,7 @@ export class HomeContainerComponent{
   }
 
   redirectToNewConversation(){
+    if(!this.authService.isLoggedIn())return;
     sessionStorage.clear();
     this.selectedConversationId = '';
     this.router.navigate(['/conversation']);
