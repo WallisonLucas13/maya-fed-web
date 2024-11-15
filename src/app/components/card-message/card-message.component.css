@@ -164,12 +164,14 @@
       justify-content: center;
       width: 35px;
       height: 35px;
+      margin-right: 0;
     }
 
     .content{
       display: flex;
       flex-direction:column;
-      max-width: 95%;
+      width: 95%;
+      margin: auto;
   }
 
     .card-container {
@@ -179,17 +181,16 @@
     }
 
     .card-container.system {
-      float: left;
       border-top-right-radius: 15px;
       border-bottom-right-radius: 15px;
       border-bottom-left-radius: 15px;
       border: 1px solid rgba(0, 0, 0, 0.1); /* Borda sutil */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+      max-width: 70%;
   }
     
     .card-container.user {
       background-color: #ffffff;
-      float: right;
       border-style:inherit;
       border-top-left-radius: 13px;
       border-bottom-right-radius: 13px;
@@ -199,9 +200,33 @@
 
     .infos-container.system{
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: center;
-      padding: 0em 0.5em;
+      width: 100%;
+      padding: 0em 0.1em;
+    }
+
+    .card-date{
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    .logo-container{
+      position: relative;
+      display: flex;
+      top: 25px;
+    }
+    .logo-container.system{
+      align-items:flex-start;
+      justify-content: flex-start;
+    }
+  
+    .logo-container.user{
+      align-items:flex-end;
+      justify-content: flex-end;
+      justify-items: flex-end;
+      overflow-x: hidden;
     }
 
   }
