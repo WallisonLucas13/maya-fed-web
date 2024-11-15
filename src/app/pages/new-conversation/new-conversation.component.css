@@ -155,7 +155,7 @@
   .all-container{
     display: flex;
     width: 90%;
-    height: 60%;
+    height: 320px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
     border-radius: 30px;
   }
