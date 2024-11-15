@@ -11,6 +11,8 @@ import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { MatIconModule } from '@angular/material/icon';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ionCloseSharp } from '@ng-icons/ionicons';
 
 @Component({
   selector: 'app-home-container',
@@ -21,10 +23,12 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule, 
     CardConversaPreviewComponent, 
     MatProgressSpinnerModule,
-    MatIconModule
+    MatIconModule,
+    NgIconComponent
   ],
   templateUrl: './home-container.component.html',
-  styleUrl: './home-container.component.css'
+  styleUrl: './home-container.component.css',
+  viewProviders: [provideIcons({ ionCloseSharp })]
 })
 export class HomeContainerComponent{
   @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
@@ -123,11 +127,13 @@ export class HomeContainerComponent{
   }
 
   onLoadWidthSize(screenWidth: number){
-    if(screenWidth <= 900){
+    if(screenWidth <= 1100){
       this.drawerControlService.hideDrawer();
+      this.drawerControlService.setIsAndroid(true);
     }else{
       this.drawerControlService.showDrawer();
       this.drawerControlService.hideMenuIcon();
+      this.drawerControlService.setIsAndroid(false);
     }
   }
 }

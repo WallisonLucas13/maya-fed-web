@@ -9,6 +9,7 @@ export class DrawerControlService {
   drawerOpened = new BehaviorSubject<boolean>(false);
   drawerMode = new BehaviorSubject<MatDrawerMode>('side');
   showMenuIcon = new BehaviorSubject<boolean>(true);
+  isAndroid = new BehaviorSubject<boolean>(true);
 
   constructor() { }
 
@@ -30,5 +31,9 @@ export class DrawerControlService {
   toggleDrawer(){
     this.drawerOpened.next(!this.drawerOpened.getValue());
   }
+
+  setIsAndroid(isAndroid: boolean){
+    this.isAndroid.next(isAndroid);
+  };
 
 }

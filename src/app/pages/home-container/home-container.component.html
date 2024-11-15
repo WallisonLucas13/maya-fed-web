@@ -5,9 +5,12 @@
     [opened]="drawerControlService.drawerOpened.getValue()"
     (openedChange)="drawerControlService.drawerOpened.next($event)">
     
-    <div class="maya-card" (click)="redirectToNewConversation()">
-      <span class="maya-span">Maya AI</span>
-      <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
+    <div class="maya-card">
+      <div class="sub-maya-card" (click)="redirectToNewConversation()">
+        <span class="maya-span">Maya</span>
+        <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
+      </div>
+      <ng-icon class="close" *ngIf="drawerControlService.showMenuIcon.getValue()" (click)="drawerControlService.toggleDrawer()" name="ionCloseSharp"></ng-icon>
     </div>
 
     <div class="drawer" *ngIf="!authService.isLoggedIn()">

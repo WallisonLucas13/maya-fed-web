@@ -1,9 +1,12 @@
 <div class="full-container">
 
   <div class="conversation-header">
-    <span class="maya-header-logo">
-      MAYA
-    </span>
+    <div class="header-container">
+      <ng-icon class="menu" *ngIf="drawerControlService.showMenuIcon.getValue()" (click)="drawerControlService.toggleDrawer()" name="ionMenu"></ng-icon>
+      <span class="maya-header-logo">
+        MAYA
+      </span>
+    </div>
 
     <div class="logout-container">
       <span class="header-username">{{authService.username.getValue()}}</span>
@@ -35,7 +38,7 @@
 
     <div class="logo-container">
       <div class="ai-icon"></div>
-      <div class="ai-text">Maya</div>
+      <div class="ai-text" *ngIf="!drawerControlService.isAndroid.getValue()">Maya</div>
     </div>
   </div>
 </div>

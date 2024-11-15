@@ -37,6 +37,15 @@
     background-color: #fff;
   }
 
+.sub-maya-card{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+}
+
   .maya-card:hover {
     cursor: pointer;
   }
@@ -55,6 +64,35 @@
     color: #555; /* Cinza mais claro */
     opacity: 0.7; /* Opacidade para suavizar */
     transition: color 0.3s ease, opacity 0.3s ease;
+  }
+
+  @media (max-width: 768px){
+    .maya-card {
+      position:fixed;
+      top: 0;
+      left: 0;
+      width: 320px;
+      display: flex;
+      align-items: center;
+      gap: 2em;
+      background-color: #fff;
+      height: 25px;
+    }
+    .maya-iniciar-conversa {
+      font-weight: 600; /* Menos espesso que bold */
+      font-size: 0.9em;
+      color: #555; /* Cinza mais claro */
+      opacity: 0.7; /* Opacidade para suavizar */
+      transition: color 0.3s ease, opacity 0.3s ease;
+      width: 100%;
+    }
+    .maya-span {
+      font-weight: bold;
+      font-size: 1em;
+      background: linear-gradient(45deg, purple, pink, black);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
   
   .maya-iniciar-conversa:hover {
@@ -123,6 +161,9 @@
   font-weight: bold;
 }
 
-.menuClose{
-  color: black;
+.close{
+  color: red;
+  font-size: 25pt;
+  display: flex;
+  align-items: flex-start;
 }

@@ -39,7 +39,7 @@
 }
 
 .all-container{
-  margin-top: 5em;
+  margin: auto;
 }
 
 .logout-text{
@@ -132,6 +132,146 @@
   height: 50px;
 }
 
+@media (max-width: 768px){
+  .form-container {
+    overflow-x: hidden;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    border-radius: 30px;
+  }
+  .sendMessage-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    width: 100%;
+    height: 50px;
+    font-size: 15pt;
+  }
+  .all-container{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-between;
+    width: 90%;
+    height: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    border-radius: 30px;
+  }
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    gap: 30px;
+    width: 90%;
+    height: 100%;
+    border-right: 1px solid none;
+    background-color: #fff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+
+  .ai-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, purple, pink);
+    position: relative;
+    animation: pulseAI 3s infinite ease-in-out;
+  }
+
+  .fale-com-span{
+    font-size: 13pt;
+    color: #555;
+  }
+  .maya-desc{
+    width: 90%;
+  }
+
+.maya-span {
+  font-weight: bold;
+  font-size: 13pt;
+  background: linear-gradient(45deg, purple, pink, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 5px purple, 0 0 10px pink, 0 0 15px white;
+  }
+  50% {
+    text-shadow: 0 0 5px purple, 0 0 10px pink, 0 0 15px white;
+  }
+  100% {
+    text-shadow: 0 0 5px purple, 0 0 10px pink, 0 0 15px white;
+  }
+}
+
+.logo-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 2s forwards;
+}
+
+.ai-icon::before, .ai-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.5;
+}
+
+.ai-icon::before {
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  left: 10px;
+}
+
+.ai-icon::after {
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  right: 10px;
+}
+.icon-send {
+  width: 20px; 
+  height: 20px;
+  font-size: 14pt;
+ }
+.icon-send:hover{
+ cursor: pointer;
+ color: purple;
+}
+
+.icon-attachment{
+ color: #392d69; /* Cor dos ícones */
+ font-size: 19px;
+ cursor: pointer;
+ margin: 10px 10px;
+ transition: color 0.3s;
+}
+
+.icon-attachment:hover{
+ color: #000; /* Muda a cor ao passar o mouse */
+}
+}
+
 .sendMessage-form input {
   flex: 1;
   border: none;
@@ -178,51 +318,82 @@
    background-color: transparent;
    margin-right: 1em;
   } 
-.icon-send {
-   width: 24px; 
-   height: 24px;
+
+@media (min-width: 1000px){
+  .all-container{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-between;
+    width: 70%;
+    height: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    border-radius: 30px;
   }
-.icon-send:hover{
-  cursor: pointer;
-  color: purple;
-}
 
-.icon-attachment{
-  color: #392d69; /* Cor dos ícones */
-  font-size: 22px;
-  cursor: pointer;
-  margin: 0 10px;
-  transition: color 0.3s;
-}
-
-.icon-attachment:hover{
-  color: #000; /* Muda a cor ao passar o mouse */
-}
-
-.all-container{
-  display: flex;
-  flex-direction: row;
-  align-items:center;
-  justify-content: space-between;
-  width: 70%;
-  height: 60%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
-  border-radius: 30px;
-}
-
-.logo-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 100%;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  animation: fadeIn 2s forwards;
+  .logo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    animation: fadeIn 2s forwards;
+  }
+  .ai-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, purple, pink);
+    position: relative;
+    animation: pulseAI 3s infinite ease-in-out;
+  }
+  .ai-icon::before, .ai-icon::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.5;
+  }
+  
+  .ai-icon::before {
+    width: 25px;
+    height: 25px;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .ai-icon::after {
+    width: 25px;
+    height: 25px;
+    top: 10px;
+    right: 10px;
+  }
+  .icon-send {
+    width: 24px; 
+    height: 24px;
+   }
+ .icon-send:hover{
+   cursor: pointer;
+   color: purple;
+ }
+ 
+ .icon-attachment{
+   color: #392d69; /* Cor dos ícones */
+   font-size: 22px;
+   cursor: pointer;
+   margin: 0 10px;
+   transition: color 0.3s;
+ }
+ 
+ .icon-attachment:hover{
+   color: #000; /* Muda a cor ao passar o mouse */
+ }
 }
 
 @keyframes pulseAI {
@@ -238,37 +409,6 @@
     transform: scale(1);
     opacity: 0.7;
   }
-}
-
-.ai-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, purple, pink);
-  position: relative;
-  animation: pulseAI 3s infinite ease-in-out;
-}
-
-.ai-icon::before, .ai-icon::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: white;
-  opacity: 0.5;
-}
-
-.ai-icon::before {
-  width: 25px;
-  height: 25px;
-  top: 10px;
-  left: 10px;
-}
-
-.ai-icon::after {
-  width: 25px;
-  height: 25px;
-  top: 10px;
-  right: 10px;
 }
 
 @keyframes textGlow {
@@ -298,4 +438,15 @@
   100% {
     opacity: 1;
   }
+}
+
+.header-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 0.5em;
+}
+
+.menu{
+  font-size: 19pt;
 }

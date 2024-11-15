@@ -12,13 +12,17 @@ import { ConversasService } from '../../services/conversas/conversas.service';
 import { Router } from '@angular/router';
 import { LoadingService } from '../../services/loading/loading.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ionMenu } from '@ng-icons/ionicons';
+import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 
 @Component({
   selector: 'app-new-conversation',
   standalone: true,
-  imports: [CommonModule, CardMessageComponent, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, MatProgressSpinnerModule, LoadingDotsComponent, MatTooltipModule],
+  imports: [CommonModule, CardMessageComponent, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, MatProgressSpinnerModule, LoadingDotsComponent, MatTooltipModule,  NgIconComponent],
   templateUrl: './new-conversation.component.html',
-  styleUrl: './new-conversation.component.css'
+  styleUrl: './new-conversation.component.css',
+  viewProviders: [provideIcons({ ionMenu })]
 })
 export class NewConversationComponent {
   username: string = "Wallison"
@@ -27,7 +31,8 @@ export class NewConversationComponent {
   constructor(
     private conversasService: ConversasService,
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public drawerControlService: DrawerControlService
   ) {
     this.messageForm = new FormGroup({
       message: new FormControl('', Validators.required)
