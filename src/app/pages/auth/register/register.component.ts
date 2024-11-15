@@ -2,14 +2,19 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { DrawerControlService } from '../../../services/drawer/drawer-control.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ionMenu } from '@ng-icons/ionicons';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIconComponent, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
+  viewProviders: [provideIcons({ ionMenu })]
 })
 export class RegisterComponent {
   registrationForm: FormGroup;
@@ -17,7 +22,8 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public drawerControlService: DrawerControlService
   ){
     this.registrationForm = new FormGroup({
       username: new FormControl('', Validators.required),

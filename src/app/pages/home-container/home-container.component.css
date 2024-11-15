@@ -29,10 +29,10 @@
     position:fixed;
     top: 0;
     left: 0;
-    max-width: 350px;
+    max-width: 300px;
     display: flex;
     align-items: center;
-    gap: 3em;
+    gap: 2em;
     padding: 1em;
     background-color: #fff;
   }
@@ -121,4 +121,8 @@
 .welcome-message span {
   color: #c046ec; /* Cor rosa/roxa para combinar com o tema */
   font-weight: bold;
+}
+
+.menuClose{
+  color: black;
 }

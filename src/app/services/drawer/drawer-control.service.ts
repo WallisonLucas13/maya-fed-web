@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { MatDrawerMode } from '@angular/material/sidenav';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DrawerControlService {
-  drawerOpened = new BehaviorSubject<boolean>(true);
+  drawerOpened = new BehaviorSubject<boolean>(false);
   drawerMode = new BehaviorSubject<MatDrawerMode>('side');
+  showMenuIcon = new BehaviorSubject<boolean>(true);
 
   constructor() { }
 
@@ -18,13 +20,15 @@ export class DrawerControlService {
   hideDrawer(){
     this.drawerMode.next("over");
     this.drawerOpened.next(false);
+    this.showMenuIcon.next(true);
   }
 
-  getDrawerMode(){
-    return this.drawerMode.asObservable();
+  hideMenuIcon(){
+    this.showMenuIcon.next(false);
   }
 
-  getDrawerOpened(){
-    return this.drawerOpened.asObservable();
+  toggleDrawer(){
+    this.drawerOpened.next(!this.drawerOpened.getValue());
   }
+
 }

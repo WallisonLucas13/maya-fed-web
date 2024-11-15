@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home-container',
@@ -19,7 +20,8 @@ import { DrawerControlService } from '../../services/drawer/drawer-control.servi
     MatSidenavModule, 
     CommonModule, 
     CardConversaPreviewComponent, 
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   templateUrl: './home-container.component.html',
   styleUrl: './home-container.component.css'
@@ -125,6 +127,7 @@ export class HomeContainerComponent{
       this.drawerControlService.hideDrawer();
     }else{
       this.drawerControlService.showDrawer();
+      this.drawerControlService.hideMenuIcon();
     }
   }
 }

@@ -1,10 +1,14 @@
-import { Component, ElementRef, EventEmitter, Inject, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Credentials } from '../../../models/auth/user.credentials';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { DrawerControlService } from '../../../services/drawer/drawer-control.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ionMenu } from '@ng-icons/ionicons';
 
 @Component({
   selector: 'app-auth',
@@ -12,10 +16,13 @@ import { ToastrService } from 'ngx-toastr';
   imports: [
     FormsModule, 
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    NgIconComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  viewProviders: [provideIcons({ ionMenu })]
 })
 export class LoginComponent {
   credencialsForm: FormGroup;
@@ -23,7 +30,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public drawerControlService: DrawerControlService
   ) {
     this.credencialsForm = new FormGroup({
       username: new FormControl('', Validators.required),

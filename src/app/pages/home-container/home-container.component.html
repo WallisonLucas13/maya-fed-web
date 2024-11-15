@@ -3,7 +3,8 @@
   <mat-drawer #drawer 
     [mode]="drawerControlService.drawerMode.getValue()" 
     [opened]="drawerControlService.drawerOpened.getValue()"
-  >
+    (openedChange)="drawerControlService.drawerOpened.next($event)">
+    
     <div class="maya-card" (click)="redirectToNewConversation()">
       <span class="maya-span">Maya AI</span>
       <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
