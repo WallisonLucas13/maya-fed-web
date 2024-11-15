@@ -18,6 +18,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionMenu } from '@ng-icons/ionicons';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-conversation',
@@ -57,7 +58,8 @@ export class ConversationComponent {
     private conversasService: ConversasService,
     private loadingService: LoadingService,
     public authService: AuthService,
-    public drawerControlService: DrawerControlService
+    public drawerControlService: DrawerControlService,
+    private titleService: Title
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
@@ -134,6 +136,7 @@ export class ConversationComponent {
           setTimeout(() => {
             this.scrollToBottom();
             this.loadingService.hide();
+            this.titleService.setTitle(response.data.title);
           }, 800)
         })
     }

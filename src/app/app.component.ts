@@ -6,6 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from './services/loading/loading.service';
 import { MarkdownConfigModule } from './configs/markdown-config.module';
+import { ConversasService } from './services/conversas/conversas.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,8 @@ export class AppComponent {
 
   isGlobalLoading: boolean = false;
 
-  constructor(private loadingService: LoadingService) { }
+  constructor(private loadingService: LoadingService, 
+    public conversasService: ConversasService) { }
   ngOnInit(): void {
     this.loadingService.isLoading$.subscribe(isLoading => {
       this.isGlobalLoading = isLoading;

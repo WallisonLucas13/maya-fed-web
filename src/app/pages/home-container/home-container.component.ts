@@ -13,6 +13,7 @@ import { DrawerControlService } from '../../services/drawer/drawer-control.servi
 import { MatIconModule } from '@angular/material/icon';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionCloseSharp } from '@ng-icons/ionicons';
+import { Title } from '@angular/platform-browser'; // Importar Title
 
 @Component({
   selector: 'app-home-container',
@@ -44,7 +45,8 @@ export class HomeContainerComponent{
     private conversasService: ConversasService,
     public authService: AuthService, 
     private router: Router,
-    public drawerControlService: DrawerControlService
+    public drawerControlService: DrawerControlService,
+    private titleService: Title
   ) {
   }
 
@@ -115,6 +117,7 @@ export class HomeContainerComponent{
     sessionStorage.clear();
     this.selectedConversationId = '';
     this.router.navigate(['/conversation']);
+    this.titleService.setTitle("Fale com a Maya")
 
     if(this.drawerControlService.isAndroid.getValue()){
       this.drawerControlService.hideDrawer();

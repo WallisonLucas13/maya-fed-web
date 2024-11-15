@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DrawerControlService } from '../../../services/drawer/drawer-control.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionMenu } from '@ng-icons/ionicons';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -23,12 +24,15 @@ export class RegisterComponent {
     private authService: AuthService, 
     private router: Router,
     private toastr: ToastrService,
-    public drawerControlService: DrawerControlService
+    public drawerControlService: DrawerControlService,
+    private titleService: Title
   ){
     this.registrationForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
+
+    this.titleService.setTitle('Cadastro');
   }
 
   register(){
