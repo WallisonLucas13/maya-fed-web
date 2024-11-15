@@ -187,16 +187,17 @@
   }
 
   .fale-com-span{
-    font-size: 13pt;
+    font-size: 15pt;
     color: #555;
   }
   .maya-desc{
     width: 90%;
+    font-size: 12pt;
   }
 
 .maya-span {
   font-weight: bold;
-  font-size: 13pt;
+  font-size: 16pt;
   background: linear-gradient(45deg, purple, pink, black);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

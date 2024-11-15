@@ -104,6 +104,7 @@ export class HomeContainerComponent{
     this.selectedConversationId = id;
     sessionStorage.setItem('lastConversationId', id);
     this.router.navigate(['/conversation', id]);
+    this.drawerControlService.hideDrawer();
   }
 
   redirectToNewConversation(){

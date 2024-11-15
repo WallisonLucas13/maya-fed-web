@@ -2,10 +2,12 @@
 
   <div class="conversation-header">
     <div class="logo-container">
-      <span class="maya-header-logo">
-        MAYA
-      </span>
-
+      <div class="sub-logo-container">
+        <ng-icon class="menu" *ngIf="drawerControlService.showMenuIcon.getValue()" (click)="drawerControlService.toggleDrawer()" name="ionMenu"></ng-icon>
+        <span class="maya-header-logo">
+          MAYA
+        </span>
+      </div>
       <div class="logout-container">
         <span class="header-username">{{authService.username.getValue()}}</span>
         <span class="logout-text" (click)="logout()">Sair</span>
@@ -15,8 +17,10 @@
   </div>
 
   <div #messageContainer class="conversation-container">
-    <div *ngFor="let date of getDates()">
-      <div class="date-divider">{{ date }}</div>
+    <div *ngFor="let date of getDates()" class="date-container">
+      <div class="date-divider">
+        <span>{{ date }}</span>
+      </div>
       <div *ngFor="let message of groupedMessages[date]" class="message">
         <app-card-message [message]="message"></app-card-message>
       </div>

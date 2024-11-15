@@ -15,6 +15,9 @@ import { LoadingDotsComponent } from "../../components/loading-dots/loading-dots
 import { LoadingService } from '../../services/loading/loading.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../services/auth/auth.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ionMenu } from '@ng-icons/ionicons';
+import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 
 @Component({
   selector: 'app-conversation',
@@ -29,10 +32,12 @@ import { AuthService } from '../../services/auth/auth.service';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     LoadingDotsComponent,
-    MatTooltipModule
+    MatTooltipModule,
+    NgIconComponent
   ],
   templateUrl: './conversation.component.html',
-  styleUrl: './conversation.component.css'
+  styleUrl: './conversation.component.css',
+  viewProviders: [provideIcons({ ionMenu })]
 })
 export class ConversationComponent {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
@@ -51,7 +56,8 @@ export class ConversationComponent {
     private route: ActivatedRoute,
     private conversasService: ConversasService,
     private loadingService: LoadingService,
-    public authService: AuthService
+    public authService: AuthService,
+    public drawerControlService: DrawerControlService
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
@@ -135,10 +141,11 @@ export class ConversationComponent {
 
   groupMessagesByDate(): void {
     this.groupedMessages = this.conversation?.messages.reduce((groups, message) => {
-      const dateKey = this.isToday(new Date(message.createdAt))
+      let dateKey = this.isToday(new Date(message.createdAt))
         ? 'Hoje'
         : this.datePipe.transform(new Date(message.createdAt), 'dd \'de\' MMMM \'de\' yyyy', 'pt-BR');
-      if (dateKey) {
+      
+        if (dateKey) {
         if (!groups[dateKey]) {
           groups[dateKey] = [];
         }

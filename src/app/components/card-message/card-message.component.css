@@ -59,6 +59,13 @@
     max-width: 100%;
     margin-left: 1em;
   }
+  .card-message li{
+    word-wrap: break-word; /* Quebra palavras longas */
+    word-break: break-word; /* Quebra palavras longas */
+    overflow-wrap: break-word;
+    max-width: 100%;
+    text-align: start;
+  }
 
   .card-date{
     display: flex;
@@ -132,4 +139,69 @@
   
   .copy-container mat-icon:hover {
     color: #000;
+  }
+
+  @media (max-width: 768px){
+    .maya-logo {
+      font-weight: bold;
+      font-size: 0.6em;
+      background: linear-gradient(45deg, purple, pink, black);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .container-system{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    }
+    .container-user{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+    }
+
+    .content{
+      display: flex;
+      flex-direction:column;
+      max-width: 95%;
+  }
+
+    .card-container {
+      word-wrap: break-word; /* Quebra palavras longas */
+      clear: both;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    }
+
+    .card-container.system {
+      float: left;
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+      border-bottom-left-radius: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.1); /* Borda sutil */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  }
+    
+    .card-container.user {
+      background-color: #ffffff;
+      float: right;
+      border-style:inherit;
+      border-top-left-radius: 13px;
+      border-bottom-right-radius: 13px;
+      border-bottom-left-radius: 13px;
+      max-width: 70%;
+    }
+
+    .infos-container.system{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding: 0em 0.5em;
+    }
+
   }
