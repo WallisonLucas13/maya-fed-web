@@ -68,6 +68,7 @@ export class AuthService {
         this.username.next(credentials.username);
 
         this.toastr.success('Login efetuado com sucesso!', `Seja bem vindo ${credentials.username}!`, {
+          positionClass: 'toast-bottom-right',
           timeOut: 3000
         });
         
