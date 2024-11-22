@@ -41,7 +41,6 @@ export class AuthService {
         
         setTimeout(() => {
           this.redirectAfterLogin();
-          this.loadingService.hide();
         }, 400)
       })
       .catch(error => {
@@ -74,7 +73,6 @@ export class AuthService {
         
         setTimeout(() => {
           this.redirectAfterLogin();
-          this.loadingService.hide();
         }, 400)
       })
       .catch(error => {

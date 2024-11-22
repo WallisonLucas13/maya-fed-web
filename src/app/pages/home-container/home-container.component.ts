@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionCloseSharp } from '@ng-icons/ionicons';
 import { Title } from '@angular/platform-browser'; // Importar Title
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Component({
   selector: 'app-home-container',
@@ -46,7 +47,8 @@ export class HomeContainerComponent{
     public authService: AuthService, 
     private router: Router,
     public drawerControlService: DrawerControlService,
-    private titleService: Title
+    private titleService: Title,
+    private loadingService: LoadingService
   ) {
   }
 
@@ -57,6 +59,8 @@ export class HomeContainerComponent{
   ngOnInit(): void {
     this.authService.token.subscribe(token => {
       if(this.authService.isLoggedIn() && token !== ''){
+        this.loadingService.show();
+
         this.getSelectedConversationBySession();
         this.getConversations();
         this.mayaLogoText = "Iniciar nova conversa";
@@ -90,6 +94,7 @@ export class HomeContainerComponent{
     this.conversasService.getConversations()
     .then(conversas => {
       this.conversasPreview = conversas.data;
+      this.loadingService.hide();
       this.scrollToTop()
     })
   }
