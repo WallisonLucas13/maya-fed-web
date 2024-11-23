@@ -3,7 +3,7 @@
   <div class="conversation-header">
     <div class="header-container">
       <ng-icon class="menu" *ngIf="drawerControlService.showMenuIcon.getValue()" (click)="drawerControlService.toggleDrawer()" name="ionMenu"></ng-icon>
-      <span class="maya-header-logo">
+      <span class="maya-header-logo" *ngIf="!drawerControlService.isAndroid.getValue()">
         MAYA
       </span>
     </div>

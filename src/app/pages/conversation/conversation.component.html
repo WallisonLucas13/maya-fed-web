@@ -10,7 +10,7 @@
         (click)="drawerControlService.toggleDrawer(); hideTooltip()" 
         name="ionMenu"></ng-icon>
 
-        <span class="maya-header-logo">
+        <span class="maya-header-logo" *ngIf="!drawerControlService.isAndroid.getValue()">
           MAYA
         </span>
       </div>
