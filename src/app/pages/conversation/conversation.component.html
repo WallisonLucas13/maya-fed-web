@@ -3,7 +3,13 @@
   <div class="conversation-header">
     <div class="logo-container">
       <div class="sub-logo-container">
-        <ng-icon class="menu" *ngIf="drawerControlService.showMenuIcon.getValue()" (click)="drawerControlService.toggleDrawer()" name="ionMenu"></ng-icon>
+        <ng-icon class="menu"
+        matTooltip="Clique para visualizar suas conversas com a Maya."
+        #menuIconTooltip="matTooltip"
+        *ngIf="drawerControlService.showMenuIcon.getValue()" 
+        (click)="drawerControlService.toggleDrawer(); hideTooltip()" 
+        name="ionMenu"></ng-icon>
+
         <span class="maya-header-logo">
           MAYA
         </span>

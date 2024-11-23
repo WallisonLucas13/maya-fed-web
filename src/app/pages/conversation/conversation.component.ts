@@ -13,7 +13,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingDotsComponent } from "../../components/loading-dots/loading-dots.component";
 import { LoadingService } from '../../services/loading/loading.service';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../services/auth/auth.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionMenu } from '@ng-icons/ionicons';
@@ -44,6 +44,7 @@ export class ConversationComponent {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('scrollTarget') private scrollTarget?: ElementRef;
   @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
+  @ViewChild('menuIconTooltip') menuIconTooltip!: MatTooltip;
 
   conversationId: string | null = null;
   conversation?: Conversa;
@@ -117,6 +118,7 @@ export class ConversationComponent {
           this.isMessageLoading = false;
           this.conversasService.emitUpdateConversations();
           this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
+          this.showTooltip();
         })
 
       setTimeout(() => {
@@ -231,5 +233,13 @@ export class ConversationComponent {
     } catch (err) {
       console.error('Scroll to top failed', err);
     }
+  }
+
+  showTooltip() {
+    this.menuIconTooltip.show();
+  }
+
+  hideTooltip() {
+    this.menuIconTooltip.hide();
   }
 }
