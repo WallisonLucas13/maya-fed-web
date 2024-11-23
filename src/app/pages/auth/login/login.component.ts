@@ -67,7 +67,7 @@ export class LoginComponent {
 
   activeDrawerInAndroid(){
     if(this.drawerControlService.isAndroid.getValue()){
-      this.drawerControlService.showDrawer();
+      this.drawerControlService.toggleDrawer();
     }
   }
 }
