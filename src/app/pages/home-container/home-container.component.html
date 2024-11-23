@@ -17,6 +17,11 @@
       <div class="avatar-container">
         <img src="maya-ft.webp" alt="Avatar do usuário" class="avatar">
         <p class="welcome-message">Bem-vindo ao <span>Maya AI</span>!</p>
+        <p class="welcome-desc">Bem-vindo à interface da Maya, a assistente virtual projetada para tornar suas interações digitais mais eficientes e personalizadas. Com a Maya, você tem acesso a uma inteligência artificial capaz de responder às suas perguntas de forma precisa e contextualizada, garantindo que suas dúvidas sejam esclarecidas rapidamente.</p>
+        <button class="buttonLogin"
+        *ngIf="drawerControlService.isAndroid.getValue()"
+        (click)="drawerControlService.toggleDrawer()"
+        >Login</button>
       </div>
     </div>
 

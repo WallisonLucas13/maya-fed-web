@@ -161,9 +161,30 @@
   font-weight: bold;
 }
 
+.welcome-desc{
+  text-align: start;
+  padding: 0.2em 1em;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  font-size: 0.9rem;
+}
+
 .close{
   color: red;
   font-size: 25pt;
   display: flex;
   align-items: flex-start;
+}
+
+.buttonLogin {
+  padding: 0.5em 2em;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ff7ee5, #6a00f4);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 3em;
 }

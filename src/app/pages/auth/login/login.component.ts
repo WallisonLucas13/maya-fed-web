@@ -41,6 +41,7 @@ export class LoginComponent {
     });
 
     this.titleService.setTitle('Login');
+    this.activeDrawerInAndroid();
   }
 
   login() {
@@ -62,5 +63,11 @@ export class LoginComponent {
 
   redirectToRegister(){
     this.router.navigate(['/register']);
+  }
+
+  activeDrawerInAndroid(){
+    if(this.drawerControlService.isAndroid.getValue()){
+      this.drawerControlService.toggleDrawer();
+    }
   }
 }
