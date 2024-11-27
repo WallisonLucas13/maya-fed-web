@@ -52,6 +52,7 @@ export class ConversationComponent {
   datePipe = new DatePipe('pt-BR');
   messageForm: FormGroup;
   isMessageLoading: boolean = false;
+  hideConversation: boolean = false;
 
   constructor(
     private router: Router,
@@ -137,6 +138,9 @@ export class ConversationComponent {
 
           setTimeout(() => {
             this.scrollToBottom();
+          }, 300)
+
+          setTimeout(() => {
             this.loadingService.hide();
             this.titleService.setTitle(response.data.title);
           }, 800)
