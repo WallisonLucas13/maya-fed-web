@@ -274,11 +274,15 @@
       width: 95%;
     }
     .conversation-container{
-      padding-left: 10px;
+      padding-left: 0px;
       padding-right: 0px;
       flex: 1;
       overflow-x: hidden;
       padding-bottom: 100px;
+    }
+    .messages{
+      margin-top: 1em;
+      margin-bottom: 1em;
     }
     .container-system{
       display: flex;
@@ -300,10 +304,11 @@
       position: fixed;
       padding-bottom: 1em;
       bottom: 0;
-      max-width: 90%; /* Garante que respeite a largura do container */
+      max-width: 95%; /* Garante que respeite a largura do container */
       width: 100%;
       border-radius: 15px;
       background-color: #eeefef;
+      z-index: 1000;
     }
 
     .arrow-down-container{

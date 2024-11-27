@@ -141,6 +141,10 @@
     color: #000;
   }
 
+  ::ng-deep markdown.system h3{
+    font-size: 1.2em;
+  }
+
   @media (max-width: 768px){
     .maya-logo {
       font-weight: bold;
@@ -170,7 +174,9 @@
     .content{
       display: flex;
       flex-direction:column;
-      width: 95%;
+      justify-content: center;
+      align-items: center;
+      max-width: 95%;
       margin: auto;
   }
 
@@ -186,8 +192,8 @@
       border-bottom-left-radius: 15px;
       border: 1px solid rgba(0, 0, 0, 0.1); /* Borda sutil */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
-      max-width: 70%;
-      margin-left: 2.4em;
+      max-width: 100%;
+      margin-left: 0em;
   }
     
     .card-container.user {
@@ -196,7 +202,8 @@
       border-top-left-radius: 13px;
       border-bottom-right-radius: 13px;
       border-bottom-left-radius: 13px;
-      max-width: 70%;
+      max-width: 95%;
+      margin-right: 0em;
     }
 
     .infos-container.system{
@@ -231,4 +238,34 @@
       overflow-x: hidden;
     }
 
+    .card-message {
+      font-size: 0.85em;
+      word-wrap: break-word; /* Quebra palavras longas */
+      word-break: break-word; /* Quebra palavras longas */
+      overflow-wrap: break-word; /* Quebra palavras longas */
+      max-width: 100%;
+    }
+  
+    .card-message p{
+      word-wrap: break-word; /* Quebra palavras longas */
+      word-break: break-word; /* Quebra palavras longas */
+      overflow-wrap: break-word;
+      max-width: 90%;
+      margin-left: 0em;
+    }
+    .card-message li{
+      word-wrap: break-word; /* Quebra palavras longas */
+      word-break: break-word; /* Quebra palavras longas */
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+
+    ::ng-deep markdown.system p, 
+    ::ng-deep markdown.system code, 
+    ::ng-deep markdown.system pre{
+      word-wrap: break-word; /* Quebra palavras longas */
+      word-break: break-word; /* Quebra palavras longas */
+      overflow-wrap: break-word;
+      max-width: 95%;
+    }
   }

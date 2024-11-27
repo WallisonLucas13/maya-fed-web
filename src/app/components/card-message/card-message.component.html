@@ -1,5 +1,9 @@
 <div class="content">
-    <div class="logo-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
+    <div class="logo-container"
+    *ngIf="!drawerControlService.isAndroid.getValue()"
+    [class.system]="message?.type === 'SYSTEM'" 
+    [class.user]="message?.type === 'USER'"
+    >
         <div *ngIf="message?.type === 'SYSTEM'" class="container-system">
             <span class="maya-logo">Maya</span>
         </div>
@@ -10,7 +14,7 @@
 
     <div class="card-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
         <div class="infos-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
-            <markdown #cardMessage class="card-message" [data]="message?.message"></markdown>
+            <markdown #cardMessage class="card-message" [data]="message?.message" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'"></markdown>
             <div class="card-date">
                 <span>{{message?.createdAt | date:'HH:mm'}}</span>
             </div>

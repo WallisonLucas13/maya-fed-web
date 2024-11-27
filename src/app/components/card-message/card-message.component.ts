@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MarkdownConfigModule } from '../../configs/markdown-config.module';
 import hljs from 'highlight.js';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 
 @Component({
   selector: 'app-card-message',
@@ -22,7 +23,10 @@ export class CardMessageComponent {
   @ViewChild('cardMessage') cardMessage?: ElementRef;
   @Input() message?: Mensagem;
 
-  constructor(private renderer: Renderer2) { }
+  constructor(
+    private renderer: Renderer2,
+    public drawerControlService: DrawerControlService
+  ) { }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -54,7 +58,7 @@ export class CardMessageComponent {
     this.renderer.setStyle(preElement, 'word-wrap', 'break-word');
     this.renderer.setStyle(preElement, 'word-break', 'break-word');
     this.renderer.setStyle(preElement, 'overflow-wrap', 'break-word');
-    this.renderer.setStyle(preElement, 'max-width', '100%');
+    this.renderer.setStyle(preElement, 'max-width', '95%');
 
     const codeElements = preElement.querySelectorAll('code');
     codeElements.forEach((codeElement: HTMLElement) => {
@@ -63,7 +67,7 @@ export class CardMessageComponent {
       this.renderer.setStyle(codeElement, 'word-wrap', 'break-word');
       this.renderer.setStyle(codeElement, 'word-break', 'break-word');
       this.renderer.setStyle(codeElement, 'overflow-wrap', 'break-word');
-      this.renderer.setStyle(codeElement, 'max-width', '100%');
+      this.renderer.setStyle(codeElement, 'max-width', '95%');
       hljs.highlightElement(codeElement);
     });
   }
