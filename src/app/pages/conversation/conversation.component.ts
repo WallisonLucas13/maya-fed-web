@@ -119,6 +119,10 @@ export class ConversationComponent {
           this.conversasService.emitUpdateConversations();
           this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
           this.showTooltip();
+
+          setTimeout(() => {
+            this.hideTooltip();
+          }, 3000);
         })
 
       setTimeout(() => {
@@ -189,10 +193,6 @@ export class ConversationComponent {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
           this.conversasService.emitUpdateConversations();
-
-          setTimeout(() => {
-            this.scrollToBottom();
-          }, 500)
         })
     }
   }
