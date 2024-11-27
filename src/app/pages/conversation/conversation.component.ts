@@ -124,10 +124,6 @@ export class ConversationComponent {
             this.hideTooltip();
           }, 3000);
         })
-
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 500)
     })
   }
 
