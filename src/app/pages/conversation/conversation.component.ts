@@ -144,6 +144,8 @@ export class ConversationComponent {
             this.loadingService.hide();
             this.titleService.setTitle(response.data.title);
           }, 800)
+        }).catch(() => {
+            this.router.navigate(['/conversation'], { replaceUrl: true });
         })
     }
   }
