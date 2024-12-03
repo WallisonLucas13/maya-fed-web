@@ -16,7 +16,7 @@ import { LoadingService } from '../../services/loading/loading.service';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../services/auth/auth.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { ionMenu } from '@ng-icons/ionicons';
+import { ionAnalytics, ionMenu } from '@ng-icons/ionicons';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { Title } from '@angular/platform-browser';
 
@@ -38,10 +38,9 @@ import { Title } from '@angular/platform-browser';
   ],
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.css',
-  viewProviders: [provideIcons({ ionMenu })]
+  viewProviders: [provideIcons({ ionMenu, ionAnalytics})]
 })
 export class ConversationComponent {
-  @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('scrollTarget') private scrollTarget?: ElementRef;
   @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
   @ViewChild('menuIconTooltip') menuIconTooltip!: MatTooltip;
@@ -243,5 +242,9 @@ export class ConversationComponent {
 
   hideTooltip() {
     this.menuIconTooltip.hide();
+  }
+
+  redirectToAnalytics(){
+    this.router.navigate(['/analytics']);
   }
 }

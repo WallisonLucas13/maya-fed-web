@@ -1,0 +1,98 @@
+.conversation-header{
+    height: 56px;
+    font-size: 15pt;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;              
+    z-index: 1000;   
+    background-color: #efefee;
+  }
+  .logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+  }
+  .sub-logo-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-username{
+    color: #555;
+    margin-right: 1em;
+    padding: 0.2em 0.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    cursor:default;
+  }
+  
+  .logout-text{
+    color: red;
+    cursor: pointer;
+  }
+  
+  .logout{
+    color: red;
+    cursor: pointer;
+  }
+  
+  .maya-header-logo {
+    color: #555;
+    text-transform: uppercase;
+    position: relative;
+    padding: 20px;
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
+    margin-left: 1em;
+    font-size: 13pt;
+  }
+  .logout-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    color: red;
+    gap: 0.5em;
+    font-size: 13pt;
+  }
+.menu{
+    font-size: 19pt;
+    margin-left: 0.5em;
+}
+  
+    @media (max-width: 768px){
+      .logo-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 95%;
+      }
+      .conversation-container{
+        padding-left: 0px;
+        padding-right: 0px;
+        flex: 1;
+        overflow-x: hidden;
+        padding-bottom: 100px;
+      }
+      .maya-logo {
+        font-weight: bold;
+        font-size: 0.6em;
+        background: linear-gradient(45deg, purple, pink, black);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  
+    .analytics-icon{
+      width: 30px;
+      font-size: 1.5em;
+      color: #392d69;
+      cursor: pointer;
+      margin-right: 0.5em;
+    }

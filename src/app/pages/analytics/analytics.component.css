@@ -1,0 +1,41 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    min-height: 100%;
+}
+.totalMessages{
+    margin-top: 1.5em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: center;
+    min-height: 100%;
+}
+.summary{
+    margin-top: 2em;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items: center;
+}
+.summary p{
+    font-size: 12pt;
+    color: #B0B0B0;
+}
+#chart {
+    width: 60%;
+    max-width: 80%;
+    padding: 1em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px){
+    #chart {
+        width: 80%;
+    }
+}
+  

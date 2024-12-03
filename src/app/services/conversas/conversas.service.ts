@@ -59,24 +59,24 @@ export class ConversasService {
   }
 
   public getConversations(): Promise<AxiosResponse<ConversaPreview[]>> {
-    const url: string = `${environment.apiUrl}${paths.conversas}`;
+    const url: string = `${environment.apiUrl}${paths.conversations}`;
     return axios.get<ConversaPreview[]>(url);
   }
 
   public getConversation(conversationId: string): Promise<AxiosResponse<Conversa>> {
-    const url: string = `${environment.apiUrl}${paths.conversa}`;
+    const url: string = `${environment.apiUrl}${paths.conversation}`;
     const params = {conversationId: conversationId};
     return axios.get<Conversa>(url, {params: params});
   }
 
   public sendMessage(conversationId: string, message: string): Promise<AxiosResponse<Mensagem>> {
-    const url: string = `${environment.apiUrl}${paths.mensagem}`;
+    const url: string = `${environment.apiUrl}${paths.message}`;
     const params = {conversationId: conversationId};
     return axios.post<Mensagem>(url, {message: message}, {params: params});
   }
 
   public sendMessageToNewConversation(message: string): Promise<AxiosResponse<Mensagem>> {
-    const url: string = `${environment.apiUrl}${paths.mensagem}`;
+    const url: string = `${environment.apiUrl}${paths.message}`;
     return axios.post<Mensagem>(url, {message: message});
   }
 

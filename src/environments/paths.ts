@@ -1,7 +1,8 @@
 export const paths = {
-    conversas: '/conversas',
-    conversa: '/conversa',
-    mensagem: '/mensagem',
+    conversations: '/conversas',
+    conversation: '/conversa',
+    message: '/mensagem',
     register: '/auth/register',
-    login: '/auth/login'
+    login: '/auth/login',
+    totalMessagesInsight: '/dashboards/total-messages'
 }

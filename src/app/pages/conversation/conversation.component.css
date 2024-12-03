@@ -355,3 +355,11 @@
       border: none;
     }
   }
+
+  .analytics-icon{
+    width: 30px;
+    font-size: 1.5em;
+    color: #392d69;
+    cursor: pointer;
+    margin-right: 0.5em;
+  }
