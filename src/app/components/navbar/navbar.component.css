@@ -89,10 +89,18 @@
       }
     }
   
-    .analytics-icon{
-      width: 30px;
-      font-size: 1.5em;
+    .analytics-container{
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
       color: #392d69;
       cursor: pointer;
       margin-right: 0.5em;
+      padding: 0.2em 0.5em;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    .analytics-icon{
+      width: 30px;
+      font-size: 1.5em;
     }
