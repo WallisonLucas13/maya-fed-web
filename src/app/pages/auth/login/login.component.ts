@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,12 +18,12 @@ import { Title } from '@angular/platform-browser';
     FormsModule, 
     ReactiveFormsModule,
     CommonModule,
-    MatIconModule,
-    NgIconComponent
+    MatIconModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  viewProviders: [provideIcons({ ionMenu })]
+  viewProviders: [provideIcons({ ionMenu })],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoginComponent {
   credencialsForm: FormGroup;

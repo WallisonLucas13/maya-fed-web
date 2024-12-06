@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, SimpleChanges, ViewChild, HostListener } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -6,12 +6,10 @@ import { CardConversaPreviewComponent } from "../../components/card-conversa-pre
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ConversasService } from '../../services/conversas/conversas.service';
 import { ConversaPreview } from '../../models/preview/conversa-preview';
-import {MatDialog} from '@angular/material/dialog';
-import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { MatIconModule } from '@angular/material/icon';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { NgIconsModule, provideIcons } from '@ng-icons/core';
 import { ionCloseSharp } from '@ng-icons/ionicons';
 import { Title } from '@angular/platform-browser'; // Importar Title
 import { LoadingService } from '../../services/loading/loading.service';
@@ -27,12 +25,12 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
     CardConversaPreviewComponent,
     MatProgressSpinnerModule,
     MatIconModule,
-    NgIconComponent,
     NavbarComponent
 ],
   templateUrl: './home-container.component.html',
   styleUrl: './home-container.component.css',
-  viewProviders: [provideIcons({ ionCloseSharp })]
+  providers: [provideIcons({ ionCloseSharp })],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeContainerComponent{
   @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;

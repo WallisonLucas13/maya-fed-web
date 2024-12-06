@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Output, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { TotalMessagesInsight } from '../../models/analytics/analytics';
 import { DatePipe } from '@angular/common';
@@ -78,21 +78,29 @@ export class AnalyticsComponent {
   fetchTotalMessages(){
     this.analyticsService.getTotalMessagesInsight().then(response => {
       this.totalMessagesList = response.data;
-      this.transformTotalMessagesChart();
-      this.initChartOptions();
+      this.filterChartByDate(new Date());
       setTimeout(() => {this.loadingService.hide()}, 500)
     })
   }
 
-  transformTotalMessagesChart(){
-    this.totalMessagesData.date = this.totalMessagesList.map(item => 
+  transformTotalMessagesChart(totalMessagesList: TotalMessagesInsight[]){
+    this.totalMessagesData.date = totalMessagesList.map(item => 
       this.formatDate(new Date(item.year, item.month -1, item.day))
     );
-    this.totalMessagesData.value = this.totalMessagesList.map(item => item.totalMessages);
+    this.totalMessagesData.value = totalMessagesList.map(item => item.totalMessages);
   }
 
   formatDate(date: Date){
     return this.datePipe.transform(date, 'dd')?.toString() || '';
+  }
+
+  filterChartByDate(date: Date){
+    const validDate = new Date(date);
+    const filteredList = this.totalMessagesList.filter(item => {
+      return item.year === validDate.getFullYear() && item.month === validDate.getMonth()+1;
+    })
+    this.transformTotalMessagesChart(filteredList);
+    this.initChartOptions();
   }
 
   initChartOptions() {

@@ -10,7 +10,11 @@
         <span class="maya-span">Maya</span>
         <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
       </div>
-      <ng-icon class="close" *ngIf="drawerControlService.showMenuIcon.getValue()" (click)="drawerControlService.toggleDrawer()" name="ionCloseSharp"></ng-icon>
+      <mat-icon 
+            class="close"
+            (click)="drawerControlService.toggleDrawer()"
+            *ngIf="drawerControlService.showMenuIcon.getValue()"
+            >close</mat-icon>
     </div>
 
     <div class="drawer" *ngIf="!authService.isLoggedIn()">
@@ -29,7 +33,9 @@
     <div #scrollTopTarget></div>
     <div class="conversas-container" *ngFor="let conversaPreview of conversasPreview">
       <app-card-conversa-preview [conversaPreview]="conversaPreview"
-        [isSelected]="conversaPreview.id === selectedConversationId" (cardClick)="handleCardClick($event)">
+        [isSelected]="conversaPreview.id === selectedConversationId" 
+        (cardClick)="handleCardClick($event)"
+        >
       </app-card-conversa-preview>
     </div>
   </mat-drawer>

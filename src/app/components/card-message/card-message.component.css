@@ -4,7 +4,7 @@
 }
 
 .card-container {
-    padding: 0.5em 1em; /* Limita a largura máxima do card */
+    padding: 0.3em 0.6em; /* Limita a largura máxima do card */
     word-wrap: break-word; /* Quebra palavras longas */
     clear: both;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
@@ -134,7 +134,7 @@
   }
 
   .copy-container span{
-    color: #28a745;
+    color: #ba005c;
   }
   
   .copy-container mat-icon:hover {

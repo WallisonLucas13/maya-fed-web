@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Moment } from 'moment';
@@ -6,10 +6,11 @@ import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {BrowserModule} from '@angular/platform-browser';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import * as _moment from 'moment';
 import {default as _rollupMoment} from 'moment';
 import moment from 'moment';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, provideMomentDateAdapter} from '@angular/material-moment-adapter';
 
 export const MY_FORMATS = {
   parse: {
@@ -35,14 +36,25 @@ export const MY_FORMATS = {
     ReactiveFormsModule
   ],
   providers: [
-    provideMomentDateAdapter(MY_FORMATS),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    provideMomentDateAdapter(MY_FORMATS)
   ],
   templateUrl: './date-filter.component.html',
   styleUrl: './date-filter.component.css'
 })
 export class DateFilterComponent {
+  @Output() filterByDate = new EventEmitter<Date>();
   moment = _rollupMoment || _moment;
-  readonly date = new FormControl();
+  readonly date = new FormControl(moment());
+
+  ngOnInit(): void {
+    this.date.valueChanges.subscribe((date) => {
+      if (date) {
+        this.filterByDate.emit(date.toDate());
+      }
+    });
+  }
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value ?? moment();
@@ -51,8 +63,5 @@ export class DateFilterComponent {
     this.date.setValue(ctrlValue);
     datepicker.close();
   }
-}
-function provideMomentDateAdapter(MY_FORMATS: { parse: { dateInput: string; }; display: { dateInput: string; monthYearLabel: string; dateA11yLabel: string; monthYearA11yLabel: string; }; }): import("@angular/core").Provider {
-  throw new Error('Function not implemented.');
 }
 

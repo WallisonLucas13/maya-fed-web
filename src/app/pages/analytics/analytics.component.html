@@ -1,6 +1,10 @@
 <div class="content">
-    <app-date-filter></app-date-filter>
-    
+
+    <div class="filter-container">
+        <span>Filtrar por Data</span>
+        <app-date-filter (filterByDate)="filterChartByDate($event)"></app-date-filter>
+    </div>
+
     <div class="totalMessages">
         <span>Total de mensagens enviadas para Maya</span>
         <div id="chart">

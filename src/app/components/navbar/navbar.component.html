@@ -1,12 +1,14 @@
 <div class="conversation-header">
     <div class="logo-container">
         <div class="sub-logo-container">
-            <ng-icon class="menu" matTooltip="Clique para visualizar suas conversas com a Maya."
-                #menuIconTooltip="matTooltip" (click)="drawerControlService.toggleDrawer(); hideTooltip()"
-                name="ionMenu" *ngIf="drawerControlService.showMenuIcon.getValue()">
-                >
-            </ng-icon>
-
+            <mat-icon 
+            class="menu"
+            matTooltip="Clique para visualizar suas conversas com a Maya."
+            #menuIconTooltip="matTooltip"
+            (click)="drawerControlService.toggleDrawer(); hideTooltip()"
+            *ngIf="drawerControlService.showMenuIcon.getValue()"
+            >list</mat-icon>
+            
             <span class="maya-header-logo" *ngIf="!drawerControlService.isAndroid.getValue()">
                 MAYA
             </span>
@@ -15,9 +17,7 @@
             <span class="header-username" *ngIf="!drawerControlService.isAndroid.getValue()">{{authService.username.getValue()}}</span>
             <div class="analytics-container" matTooltip="Insights de uso da Maya" (click)="redirectToAnalytics()">
                 <span>Análises</span>
-                <ng-icon class="analytics-icon"
-                    name="ionAnalytics">
-                 </ng-icon>
+                <mat-icon class="analytics-icon">query_stats</mat-icon>
             </div>
             <span class="logout-text" (click)="logout()">Sair</span>
             <mat-icon class="logout" (click)="logout()">logout</mat-icon>

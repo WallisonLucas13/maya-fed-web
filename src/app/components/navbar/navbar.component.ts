@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '../../services/loading/loading.service';
@@ -15,12 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     MatIconModule,
-    NgIconComponent,
     MatTooltipModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  viewProviders: [provideIcons({ ionMenu, ionAnalytics})]
+  viewProviders: [provideIcons({ ionMenu, ionAnalytics})],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NavbarComponent {
   @ViewChild('menuIconTooltip') menuIconTooltip!: MatTooltip;

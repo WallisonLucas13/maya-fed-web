@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -12,10 +12,11 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIconComponent, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule,CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
-  viewProviders: [provideIcons({ ionMenu })]
+  viewProviders: [provideIcons({ ionMenu })],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RegisterComponent {
   registrationForm: FormGroup;

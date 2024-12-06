@@ -175,9 +175,10 @@
 
 .close{
   color: red;
-  font-size: 25pt;
+  font-size: 20pt;
   display: flex;
   align-items: flex-start;
+  width: 30px;
 }
 
 .buttonLogin {
