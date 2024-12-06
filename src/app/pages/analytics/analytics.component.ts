@@ -45,7 +45,6 @@ export type TotalMessagesData = {
   imports: [
     NgApexchartsModule,
     MatIconModule,
-    NgIconComponent,
     NavbarComponent
 ],
   templateUrl: './analytics.component.html',

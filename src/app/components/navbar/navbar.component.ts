@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from '../../services/loading/loading.service';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
@@ -12,12 +13,14 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-navbar',
   standalone: true,
   imports: [
+    CommonModule,
     MatIconModule,
     NgIconComponent,
     MatTooltipModule
   ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
+  viewProviders: [provideIcons({ ionMenu, ionAnalytics})]
 })
 export class NavbarComponent {
   @ViewChild('menuIconTooltip') menuIconTooltip!: MatTooltip;

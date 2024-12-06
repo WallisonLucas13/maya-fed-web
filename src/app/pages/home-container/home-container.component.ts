@@ -15,19 +15,21 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionCloseSharp } from '@ng-icons/ionicons';
 import { Title } from '@angular/platform-browser'; // Importar Title
 import { LoadingService } from '../../services/loading/loading.service';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-home-container',
   standalone: true,
   imports: [
-    RouterOutlet, 
-    MatSidenavModule, 
-    CommonModule, 
-    CardConversaPreviewComponent, 
+    RouterOutlet,
+    MatSidenavModule,
+    CommonModule,
+    CardConversaPreviewComponent,
     MatProgressSpinnerModule,
     MatIconModule,
-    NgIconComponent
-  ],
+    NgIconComponent,
+    NavbarComponent
+],
   templateUrl: './home-container.component.html',
   styleUrl: './home-container.component.css',
   viewProviders: [provideIcons({ ionCloseSharp })]

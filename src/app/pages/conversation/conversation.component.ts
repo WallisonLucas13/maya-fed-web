@@ -19,6 +19,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionAnalytics, ionMenu } from '@ng-icons/ionicons';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { Title } from '@angular/platform-browser';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-conversation',
@@ -34,8 +35,9 @@ import { Title } from '@angular/platform-browser';
     MatProgressSpinnerModule,
     LoadingDotsComponent,
     MatTooltipModule,
-    NgIconComponent
-  ],
+    NgIconComponent,
+    NavbarComponent
+],
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.css',
   viewProviders: [provideIcons({ ionMenu, ionAnalytics})]
