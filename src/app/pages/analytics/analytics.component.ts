@@ -159,6 +159,7 @@ export class AnalyticsComponent {
         }
       },
       fill: {
+        colors: ["#ba005c", "#C23B7D"],
         type: "gradient",
         gradient: {
           shade: "light",
