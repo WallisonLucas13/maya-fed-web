@@ -34,9 +34,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     LoadingDotsComponent,
-    MatTooltipModule,
-    NgIconComponent,
-    NavbarComponent
+    MatTooltipModule
 ],
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.css',

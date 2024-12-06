@@ -192,7 +192,7 @@
       border-bottom-left-radius: 15px;
       border: 1px solid rgba(0, 0, 0, 0.1); /* Borda sutil */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
-      max-width: 100%;
+      max-width: 90%;
       margin-left: 0em;
   }
     
@@ -243,7 +243,7 @@
       word-wrap: break-word; /* Quebra palavras longas */
       word-break: break-word; /* Quebra palavras longas */
       overflow-wrap: break-word; /* Quebra palavras longas */
-      max-width: 100%;
+      max-width: 95%;
     }
   
     .card-message p{
@@ -257,7 +257,7 @@
       word-wrap: break-word; /* Quebra palavras longas */
       word-break: break-word; /* Quebra palavras longas */
       overflow-wrap: break-word;
-      max-width: 100%;
+      max-width: 90%;
     }
 
     ::ng-deep markdown.system p, 
@@ -266,6 +266,6 @@
       word-wrap: break-word; /* Quebra palavras longas */
       word-break: break-word; /* Quebra palavras longas */
       overflow-wrap: break-word;
-      max-width: 95%;
+      max-width: 90%;
     }
   }
