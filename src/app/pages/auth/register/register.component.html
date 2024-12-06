@@ -1,7 +1,4 @@
 <div class="register-container">
-    <div class="menu-container" *ngIf="drawerControlService.showMenuIcon.getValue()">
-        <ng-icon class="menu" (click)="drawerControlService.toggleDrawer()" name="ionMenu"></ng-icon>
-    </div>
     <div class="register-box">
         <h2>Crie sua conta</h2>
         <form [formGroup]="registrationForm" (ngSubmit)="register()">

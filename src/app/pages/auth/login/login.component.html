@@ -1,8 +1,4 @@
 <div class="login-container">
-
-    <div class="menu-container" *ngIf="drawerControlService.showMenuIcon.getValue()">
-        <ng-icon class="menu" (click)="drawerControlService.toggleDrawer()" name="ionMenu"></ng-icon>
-    </div>
     <div class="login-box">
         <h2>Entre com seus dados</h2>
         <form [formGroup]="credencialsForm" (ngSubmit)="login()">

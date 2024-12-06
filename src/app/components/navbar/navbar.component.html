@@ -9,11 +9,13 @@
             *ngIf="drawerControlService.showMenuIcon.getValue()"
             >list</mat-icon>
             
-            <span class="maya-header-logo" *ngIf="!drawerControlService.isAndroid.getValue()">
+            <span 
+            class="maya-header-logo" 
+            *ngIf="!drawerControlService.isAndroid.getValue() && authService.isLoggedIn()">
                 MAYA
             </span>
         </div>
-        <div class="logout-container">
+        <div class="logout-container" *ngIf="authService.isLoggedIn()">
             <span class="header-username" *ngIf="!drawerControlService.isAndroid.getValue()">{{authService.username.getValue()}}</span>
             <div class="analytics-container" matTooltip="Insights de uso da Maya" (click)="redirectToAnalytics()">
                 <span>Análises</span>
