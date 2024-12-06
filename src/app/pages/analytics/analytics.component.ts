@@ -22,6 +22,7 @@ import {
   NgApexchartsModule
 } from "ng-apexcharts";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { DateFilterComponent } from "../../components/date-filter/date-filter.component";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -45,7 +46,7 @@ export type TotalMessagesData = {
   imports: [
     NgApexchartsModule,
     MatIconModule,
-    NavbarComponent
+    DateFilterComponent
 ],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.css',
@@ -91,7 +92,7 @@ export class AnalyticsComponent {
   }
 
   formatDate(date: Date){
-    return this.datePipe.transform(date, 'dd/MM')?.toString() || '';
+    return this.datePipe.transform(date, 'dd')?.toString() || '';
   }
 
   initChartOptions() {
@@ -103,7 +104,7 @@ export class AnalyticsComponent {
         }
       ],
       chart: {
-        height: 200,
+        height: 150,
         type: "bar"
       },
       plotOptions: {
@@ -172,18 +173,6 @@ export class AnalyticsComponent {
         labels: {
           show: false
         }
-      },
-      title: {
-        text: "Total de mensagens enviadas para Maya",
-        floating: true,
-        offsetY: 0,
-        align: "center",
-        style: {
-          fontSize: "12px",
-          fontFamily: "Poppins, sans-serif",
-          color: "#444"
-        },
-
       }
     }
   }

@@ -19,7 +19,7 @@ import { DrawerControlService } from '../../services/drawer/drawer-control.servi
 @Component({
   selector: 'app-new-conversation',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, MatProgressSpinnerModule, MatTooltipModule, NgIconComponent],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, MatProgressSpinnerModule, MatTooltipModule],
   templateUrl: './new-conversation.component.html',
   styleUrl: './new-conversation.component.css',
   viewProviders: [provideIcons({ ionMenu })]

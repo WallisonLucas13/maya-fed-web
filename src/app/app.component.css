@@ -15,17 +15,3 @@
     align-items: center;
     z-index: 1000; /* Certifique-se de que esteja acima de outros elementos dentro do componente */
   }
-
-  .spark {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ffcccb, #ff1493);
-    box-shadow: 0 0 15px #ff1493, 0 0 30px #ff69b4;
-    pointer-events: none; /* Evita interferência com cliques */
-    opacity: 0.8;
-    transition: left 0.5s ease, top 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
