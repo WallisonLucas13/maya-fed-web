@@ -34,8 +34,8 @@
     </div>
   </mat-drawer>
   <mat-drawer-content class="router-content">
-    <app-navbar></app-navbar> 
-    <div style="padding-top: 60px;">
+    <app-navbar *ngIf="authService.isLoggedIn()"></app-navbar> 
+    <div [class.topSpace]="authService.isLoggedIn()">
       <router-outlet />
     </div>
   </mat-drawer-content>

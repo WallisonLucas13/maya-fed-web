@@ -196,3 +196,6 @@
 .buttonLogin:focus {
   outline: none;
 }
+.topSpace{
+  padding-top: 50px;
+}
