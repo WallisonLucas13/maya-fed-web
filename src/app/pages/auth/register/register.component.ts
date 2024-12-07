@@ -52,4 +52,8 @@ export class RegisterComponent {
       positionClass: 'toast-bottom-right'
     });
   }
+
+  redirectToLogin(){
+    this.router.navigate(['/login']);
+  }
 }
