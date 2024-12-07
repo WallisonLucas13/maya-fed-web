@@ -153,4 +153,8 @@ export class HomeContainerComponent{
       this.drawerControlService.setIsAndroid(false);
     }
   }
+
+  redirectToLogin(){
+    this.router.navigate(['/login']);
+  }
 }
