@@ -118,11 +118,11 @@ export class ConversationComponent {
           this.isMessageLoading = false;
           this.conversasService.emitUpdateConversations();
           this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
-          this.showTooltip();
+          this.drawerControlService.showMenuTooltip();
 
           setTimeout(() => {
-            this.hideTooltip();
-          }, 3000);
+            this.drawerControlService.hideMenuTooltip();
+          }, 5000);
         })
     })
   }
@@ -235,15 +235,6 @@ export class ConversationComponent {
       console.error('Scroll to top failed', err);
     }
   }
-
-  showTooltip() {
-    this.menuIconTooltip.show();
-  }
-
-  hideTooltip() {
-    this.menuIconTooltip.hide();
-  }
-
   redirectToAnalytics(){
     this.router.navigate(['/analytics']);
   }

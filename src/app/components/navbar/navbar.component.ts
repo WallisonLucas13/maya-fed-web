@@ -27,18 +27,18 @@ export class NavbarComponent {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private loadingService: LoadingService,
     public authService: AuthService,
     public drawerControlService: DrawerControlService
   ) {}
 
-  showTooltip() {
-    this.menuIconTooltip.show();
-  }
-
-  hideTooltip() {
-    this.menuIconTooltip.hide();
+  ngOnInit(): void {
+    this.drawerControlService.menuTooltipOpened.subscribe((opened) => {
+      if(opened){
+        this.menuIconTooltip.show();
+      } else {
+        this.menuIconTooltip.hide();
+      }
+    });
   }
 
   redirectToAnalytics(){
@@ -48,5 +48,9 @@ export class NavbarComponent {
   logout(){
     this.authService.logout();
     sessionStorage.removeItem('lastConversationId');
+  }
+
+  hideMenuTooltip(){
+    this.drawerControlService.hideMenuTooltip();
   }
 }

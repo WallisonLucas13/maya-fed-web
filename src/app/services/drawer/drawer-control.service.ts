@@ -10,6 +10,7 @@ export class DrawerControlService {
   drawerMode = new BehaviorSubject<MatDrawerMode>('side');
   showMenuIcon = new BehaviorSubject<boolean>(true);
   isAndroid = new BehaviorSubject<boolean>(true);
+  menuTooltipOpened = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 
@@ -35,5 +36,13 @@ export class DrawerControlService {
   setIsAndroid(isAndroid: boolean){
     this.isAndroid.next(isAndroid);
   };
+
+  showMenuTooltip(){
+    this.menuTooltipOpened.next(true);
+  }
+
+  hideMenuTooltip(){
+    this.menuTooltipOpened.next(false);
+  }
 
 }

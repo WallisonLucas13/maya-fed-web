@@ -5,7 +5,7 @@
             class="menu"
             matTooltip="Clique para visualizar suas conversas com a Maya."
             #menuIconTooltip="matTooltip"
-            (click)="drawerControlService.toggleDrawer(); hideTooltip()"
+            (click)="drawerControlService.toggleDrawer(); hideMenuTooltip()"
             *ngIf="drawerControlService.showMenuIcon.getValue()"
             >list</mat-icon>
             
