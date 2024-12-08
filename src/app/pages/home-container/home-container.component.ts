@@ -157,7 +157,7 @@ export class HomeContainerComponent{
   redirectToLogin(){
     this.router.navigate(['/login']);
     setTimeout(() => {
-      this.drawerControlService.hideDrawer();
+      this.drawerControlService.toggleDrawer();
     }, 200)
   }
 }
