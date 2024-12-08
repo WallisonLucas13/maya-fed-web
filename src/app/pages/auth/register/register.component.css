@@ -44,7 +44,7 @@ html, body {
 @media (max-width: 768px){
     .register-container {
         width: 100%;
-        height: 70vh;
+        height: 80vh;
         display: flex;
         flex-direction: column;
         align-items: center;
