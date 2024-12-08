@@ -2,10 +2,10 @@
     <div class="login-box">
         <h2>Faça Login</h2>
         <form [formGroup]="credencialsForm" (ngSubmit)="login()">
-            <label for="username">Username:</label>
+            <label for="username">Username</label>
             <input type="text" id="username" formControlName="username" placeholder="Insira seu username" required>
 
-            <label for="password">Password:</label>
+            <label for="password">Password</label>
             <input type="password" id="password" formControlName="password" placeholder="Insira sua senha" required>
 
             <button type="submit">Login</button>
