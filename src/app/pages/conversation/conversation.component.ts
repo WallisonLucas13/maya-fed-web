@@ -151,18 +151,27 @@ export class ConversationComponent {
 
   groupMessagesByDate(): void {
     this.groupedMessages = this.conversation?.messages.reduce((groups, message) => {
-      let dateKey = this.isToday(new Date(message.createdAt))
-        ? 'Hoje'
-        : this.datePipe.transform(new Date(message.createdAt), 'dd \'de\' MMMM \'de\' yyyy', 'pt-BR');
-      
-        if (dateKey) {
+      const messageDate = new Date(message.createdAt);
+      const dateKey = this.getDateKey(messageDate);
+
+      if (dateKey) {
         if (!groups[dateKey]) {
           groups[dateKey] = [];
         }
         groups[dateKey].push(message);
       }
       return groups;
-    }, {} as { [key: string]: Mensagem[] }) ?? {};
+    }, {} as { [key: string]: any[] }) ?? {};
+  }
+
+  getDateKey(date: Date): string {
+    if (this.isToday(date)) {
+      return 'Hoje';
+    } else if (this.isYesterday(date)) {
+      return 'Ontem';
+    } else {
+      return this.datePipe.transform(date, 'dd \'de\' MMMM \'de\' yyyy', 'pt-BR') || '';
+    }
   }
 
   getDates(): string[] {
@@ -175,6 +184,16 @@ export class ConversationComponent {
       date.getDate() === today.getDate() &&
       date.getMonth() === today.getMonth() &&
       date.getFullYear() === today.getFullYear()
+    );
+  }
+
+  isYesterday(date: Date): boolean {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return (
+      date.getDate() === yesterday.getDate() &&
+      date.getMonth() === yesterday.getMonth() &&
+      date.getFullYear() === yesterday.getFullYear()
     );
   }
 
