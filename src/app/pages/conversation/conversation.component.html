@@ -25,9 +25,19 @@
 
   <div class="input-wrapper">
     <div class="input-container">
+
+      <div *ngIf="selectedFileName" class="file-name">
+        {{ selectedFileName }}
+      </div>
+      
       <div class="form-container">
         <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-          <mat-icon class="icon-attachment">attach_file</mat-icon>
+          
+          <label for="file-input" class="icon-attachment">
+            <mat-icon>attach_file</mat-icon>
+          </label>
+          <input id="file-input" type="file" formControlName="files" style="display: none;" (change)="onFileSelected()" />
+
           <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
             (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"
             class="form-control" placeholder='Digite sua mensagem' name="message" required />
