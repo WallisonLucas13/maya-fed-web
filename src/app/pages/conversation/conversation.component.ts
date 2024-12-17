@@ -65,7 +65,8 @@ export class ConversationComponent {
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
-      message: new FormControl('', Validators.required)
+      message: new FormControl('', Validators.required),
+      file: new FormControl()
     });
   }
 
@@ -76,6 +77,7 @@ export class ConversationComponent {
         if (params.get('id') !== 'new') {
           this.conversationId = params.get('id');
           this.getConversation();
+          this.selectedFile = null;
         } else {
           this.handleNewConversation();
         }
@@ -279,5 +281,6 @@ export class ConversationComponent {
 
   removeFile(): void {
     this.selectedFile = null;
+    this.messageForm.get('file')?.reset();
   }
 }

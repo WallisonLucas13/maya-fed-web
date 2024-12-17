@@ -39,9 +39,10 @@
           </label>
           <input 
           id="file-input" 
-          type="file" 
-          style="display: none;" 
-          (change)="onFileSelected($event)" />
+          type="file"
+          style="display: none;"
+          formControlName="file"
+          (change)="onFileSelected($event)"/>
 
           <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
             (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"

@@ -25,8 +25,8 @@ import { DrawerControlService } from '../../services/drawer/drawer-control.servi
   viewProviders: [provideIcons({ ionMenu })]
 })
 export class NewConversationComponent {
-  username: string = "Wallison"
   messageForm: FormGroup;
+  selectedFile: File | null = null;
 
   constructor(
     private conversasService: ConversasService,
@@ -35,8 +35,11 @@ export class NewConversationComponent {
     public drawerControlService: DrawerControlService
   ) {
     this.messageForm = new FormGroup({
-      message: new FormControl('', Validators.required)
+      message: new FormControl('', Validators.required),
+      file: new FormControl()
     });
+
+    this.selectedFile = null;
   }
 
   sendMessage() {
@@ -44,8 +47,15 @@ export class NewConversationComponent {
     if (!this.messageForm.controls['message'].invalid) {
       this.messageForm.get('message')?.reset();
 
-      const promisse = this.conversasService
+      let promisse;
+
+      if(this.selectedFile){
+        promisse = this.conversasService
+         .sendMessageToNewConversationWithFiles(message, this.selectedFile);
+      }else{
+        promisse = this.conversasService
         .sendMessageToNewConversation(message);
+      }
 
       this.conversasService.setNewConversation(message, promisse);
       this.router.navigate(['/conversation', 'new']);
@@ -55,6 +65,18 @@ export class NewConversationComponent {
   logout(){
     this.authService.logout();
     sessionStorage.removeItem('lastConversationId');
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+  removeFile(): void {
+    this.selectedFile = null;
+    this.messageForm.get('file')?.reset();
   }
 
 }

@@ -96,6 +96,19 @@ export class ConversasService {
     return axios.post<Mensagem>(url, {message: message});
   }
 
+  public sendMessageToNewConversationWithFiles(message: string, file: any): Promise<AxiosResponse<Mensagem>> {
+    const url: string = `${environment.apiUrl}${paths.messageWithFiles}`;
+    const formData = new FormData();
+    formData.append('input', message);
+    formData.append('files', file);
+
+    return axios.post<Mensagem>(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
+
   public emitUpdateConversations(): void {
     this.updateConversationsSubject.next();
   }

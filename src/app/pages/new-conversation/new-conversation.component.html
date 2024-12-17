@@ -10,24 +10,40 @@
         Experimente a Maya! Faça perguntas e descubra respostas surpreendentes. Venha explorar o conhecimento!
       </span>
 
-      <div class="form-container">
-        <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-          <mat-icon class="icon-attachment">attach_file</mat-icon>
-          <input 
-            formControlName="message" 
-            type="text" 
-            (blur)="messageForm.get('message')?.markAsTouched()"
-            (input)="messageForm.get('message')?.updateValueAndValidity()" 
-            [value]="messageForm.get('message')?.value"
-            class="form-control" 
-            placeholder='Envie sua mensagem' 
-            name="message" required 
-          />
-
-          <button type="submit" id="sendButton" class="send-button">
-            <mat-icon class="icon-send">send</mat-icon>
-          </button>
-        </form>
+      <div class="form-all-container">
+        <div *ngIf="selectedFile" class="file-name">
+          {{ selectedFile.name }}
+          <mat-icon class="icon-close" (click)="removeFile()">close</mat-icon>
+        </div>
+        <div class="form-container">
+          <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+  
+            <label for="file-input" class="icon-attachment">
+              <mat-icon>attach_file</mat-icon>
+            </label>
+            <input 
+            id="file-input" 
+            type="file" 
+            style="display: none;"
+            formControlName="file"
+            (change)="onFileSelected($event)"/>
+  
+            <input 
+              formControlName="message" 
+              type="text" 
+              (blur)="messageForm.get('message')?.markAsTouched()"
+              (input)="messageForm.get('message')?.updateValueAndValidity()" 
+              [value]="messageForm.get('message')?.value"
+              class="form-control" 
+              placeholder='Envie sua mensagem' 
+              name="message" required 
+            />
+  
+            <button type="submit" id="sendButton" class="send-button">
+              <mat-icon class="icon-send">send</mat-icon>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
 

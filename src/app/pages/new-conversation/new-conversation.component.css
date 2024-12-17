@@ -69,13 +69,17 @@
 
 .form-container {
   overflow-x: hidden;
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
   border-radius: 30px;
+}
+
+.form-all-container{
+  width: 85%;
 }
 
 .sendMessage-form {
@@ -90,13 +94,16 @@
 @media (max-width: 768px){
   .form-container {
     overflow-x: hidden;
-    width: 95%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para a logo */
     border-radius: 30px;
+  }
+  .form-all-container{
+    width: 95%;
   }
   .sendMessage-form {
     display: flex;
@@ -410,4 +417,23 @@
 
 .menu{
   font-size: 19pt;
+}
+
+.file-name{
+  font-size: 0.85em;
+  margin-top: 0.3em;
+  color: #392d69;
+  display: flex;
+  justify-content: left;
+  margin-left: 1.5em;
+  align-items: center;
+}
+
+.file-name mat-icon{
+  margin-left: 0.3em;
+  color: red;
+}
+
+.file-name mat-icon:hover{
+  cursor: pointer;
 }
