@@ -52,7 +52,7 @@ export class ConversationComponent {
   messageForm: FormGroup;
   isMessageLoading: boolean = false;
   hideConversation: boolean = false;
-  selectedFileName: string | null = null;
+  selectedFile: File | null = null;
 
   constructor(
     private router: Router,
@@ -65,8 +65,7 @@ export class ConversationComponent {
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
-      message: new FormControl('', Validators.required),
-      files: new FormControl()
+      message: new FormControl('', Validators.required)
     });
   }
 
@@ -200,8 +199,6 @@ export class ConversationComponent {
   }
 
   sendMessage(){
-    const files = this.messageForm.controls['files'].value;
-
     if (this.messageForm.valid && this.loadingService.isHidden()) {
       this.isMessageLoading = true;
       const message = this.messageForm.get('message')?.value;
@@ -211,9 +208,9 @@ export class ConversationComponent {
         this.scrollToBottom();
       }, 200)
 
-      if(files){
+      if(this.selectedFile){
         this.conversasService
-        .sendMessageWithFiles(this.conversationId ?? '', message, files)
+        .sendMessageWithFiles(this.conversationId ?? '', message, this.selectedFile)
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
@@ -273,11 +270,14 @@ export class ConversationComponent {
     this.router.navigate(['/analytics']);
   }
 
-  onFileSelected(): void {
-    const files = this.messageForm.controls['files'].value;
-    console.log(this.messageForm.controls['files'])
-    if (files) {
-      this.selectedFileName = files;
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
     }
+  }
+
+  removeFile(): void {
+    this.selectedFile = null;
   }
 }

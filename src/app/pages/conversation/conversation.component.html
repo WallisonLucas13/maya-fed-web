@@ -26,17 +26,22 @@
   <div class="input-wrapper">
     <div class="input-container">
 
-      <div *ngIf="selectedFileName" class="file-name">
-        {{ selectedFileName }}
+      <div *ngIf="selectedFile" class="file-name">
+        {{ selectedFile.name }}
+        <mat-icon class="icon-close" (click)="removeFile()">close</mat-icon>
       </div>
-      
+
       <div class="form-container">
         <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
           
           <label for="file-input" class="icon-attachment">
             <mat-icon>attach_file</mat-icon>
           </label>
-          <input id="file-input" type="file" formControlName="files" style="display: none;" (change)="onFileSelected()" />
+          <input 
+          id="file-input" 
+          type="file" 
+          style="display: none;" 
+          (change)="onFileSelected($event)" />
 
           <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
             (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"

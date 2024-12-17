@@ -75,11 +75,11 @@ export class ConversasService {
     return axios.post<Mensagem>(url, {message: message}, {params: params});
   }
 
-  public sendMessageWithFiles(conversationId: string, message: string, files: any): Promise<AxiosResponse<Mensagem>> {
+  public sendMessageWithFiles(conversationId: string, message: string, file: any): Promise<AxiosResponse<Mensagem>> {
     const url: string = `${environment.apiUrl}${paths.messageWithFiles}`;
     const formData = new FormData();
     formData.append('input', message);
-    formData.append('files', files);
+    formData.append('files', file);
 
     return axios.post<Mensagem>(url, formData, {
       headers: {

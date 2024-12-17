@@ -299,10 +299,20 @@
     margin-right: 0.5em;
   }
   .file-name{
-    font-size: 0.8em;
+    font-size: 0.85em;
     margin-top: 0.3em;
     color: #392d69;
     display: flex;
     justify-content: left;
     margin-left: 1.5em;
+    align-items: center;
+  }
+
+  .file-name mat-icon{
+    margin-left: 0.3em;
+    color: red;
+  }
+
+  .file-name mat-icon:hover{
+    cursor: pointer;
   }
