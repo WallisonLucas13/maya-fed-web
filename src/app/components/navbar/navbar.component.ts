@@ -47,7 +47,7 @@ export class NavbarComponent {
 
   logout(){
     this.authService.logout();
-    sessionStorage.removeItem('lastConversationId');
+    sessionStorage.clear();
   }
 
   hideMenuTooltip(){

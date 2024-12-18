@@ -67,6 +67,7 @@ export class HomeContainerComponent{
     
         this.conversasService.getUpdateConversations().subscribe(() => {
           if(this.authService.isLoggedIn() && token !== ''){
+            this.getPreviewConversationsFromSession()
             this.getConversations();
             this.getSelectedConversationBySession();
             this.mayaLogoText = "Iniciar nova conversa";
@@ -88,6 +89,15 @@ export class HomeContainerComponent{
   saveDataInSession(event: BeforeUnloadEvent) {
     sessionStorage.setItem('token', this.authService.token.getValue() ?? '');
     sessionStorage.setItem('username', this.authService.username.getValue() ?? '');
+    this.conversasPreview = [];
+  }
+
+  getPreviewConversationsFromSession(){
+    const data = sessionStorage.getItem('conversationsPreview');
+    if(data){
+      const previews = JSON.parse(sessionStorage.getItem('conversationsPreview') ?? '');
+      this.conversasPreview = previews;
+    }
   }
 
   getConversations(){
@@ -96,6 +106,7 @@ export class HomeContainerComponent{
       this.conversasPreview = conversas.data;
       this.loadingService.hide();
       this.scrollToTop()
+      sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversasPreview));
     })
   }
 
