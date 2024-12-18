@@ -3,5 +3,6 @@ export type Mensagem = {
     id: string;
     type: string;
     message: string;
+    files?: string[];
     createdAt: Date;
 }

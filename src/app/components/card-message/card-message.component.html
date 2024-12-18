@@ -12,6 +12,14 @@
         </div>
     </div>
 
+    <div *ngIf="message?.files?.length" class="file-name" 
+    [class.system]="message?.type === 'SYSTEM'"
+    [class.user]="message?.type === 'USER'"
+    >
+        <mat-icon class="upload-file">upload_file</mat-icon>
+        {{ message?.files }}
+    </div>
+
     <div class="card-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
         <div class="infos-container" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'">
             <markdown #cardMessage class="card-message" [data]="message?.message" [class.system]="message?.type === 'SYSTEM'" [class.user]="message?.type === 'USER'"></markdown>

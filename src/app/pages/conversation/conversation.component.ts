@@ -237,6 +237,7 @@ export class ConversationComponent {
       id: Math.random().toString(36).substr(2, 9),
       type: 'USER',
       message: messageText,
+      files: this.selectedFile ? [this.selectedFile.name] : [],
       createdAt: new Date()
     });
     this.groupMessagesByDate();
@@ -248,6 +249,7 @@ export class ConversationComponent {
       id: message.id,
       type: message.type,
       message: message.message,
+      files: this.selectedFile ? [this.selectedFile.name] : [],
       createdAt: new Date
     });
     this.groupMessagesByDate();

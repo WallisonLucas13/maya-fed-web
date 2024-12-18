@@ -20,7 +20,24 @@
     border: 1px solid rgba(0, 0, 0, 0.1); /* Borda sutil */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
     margin-left: 3.5em;
-}
+  }
+
+  .upload-file{
+    font-size: 15pt;
+  }
+
+  .file-name{
+    display: flex;
+    align-items: center;
+  }
+
+  .file-name.system{
+    font-size: 0.70em;
+    color: #392d69;
+    float: left;
+    margin-right: auto;
+    margin-left: 5.0em;
+  }
   
   .card-container.user {
     background-color: #ffffff;
@@ -31,6 +48,15 @@
     border-top-left-radius: 13px;
     border-bottom-right-radius: 13px;
     border-bottom-left-radius: 13px;
+  }
+
+  .file-name.user{
+    font-size: 0.70em;
+    color: #392d69;
+    margin-left: auto;
+    margin-right: 3.5em;
+    float: right;
+    border-style:inherit;
   }
 
   .infos-container{
