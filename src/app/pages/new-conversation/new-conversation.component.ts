@@ -57,7 +57,7 @@ export class NewConversationComponent {
         .sendMessageToNewConversation(message);
       }
 
-      this.conversasService.setNewConversation(message, promisse);
+      this.conversasService.setNewConversation(message, this.selectedFile ?? null, promisse);
       this.router.navigate(['/conversation', 'new']);
     }
   }

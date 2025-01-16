@@ -17,8 +17,9 @@ import { paths } from '../../../environments/paths';
 })
 export class ConversasService {
   private updateConversationsSubject = new BehaviorSubject<void>(undefined);
-  private newConversation = new BehaviorSubject<{userMessage: string, systemSubscription: Promise<AxiosResponse<Mensagem, any>>}>({
-     userMessage: '', 
+  private newConversation = new BehaviorSubject<{userMessage: string, file: File | null, systemSubscription: Promise<AxiosResponse<Mensagem, any>>}>({
+     userMessage: '',
+     file: null,
      systemSubscription: Promise.resolve({} as AxiosResponse<Mensagem, any>) 
   });
 
@@ -117,8 +118,12 @@ export class ConversasService {
     return this.updateConversationsSubject;
   }
 
-  public setNewConversation(userMessage: string, systemSubscription: Promise<AxiosResponse<Mensagem, any>>): void {
-    this.newConversation.next({userMessage: userMessage, systemSubscription: systemSubscription});
+  public setNewConversation(userMessage: string, file: File | null, systemSubscription: Promise<AxiosResponse<Mensagem, any>>): void {
+    this.newConversation.next({
+      userMessage: userMessage, 
+      file: file,
+      systemSubscription: systemSubscription
+    });
   }
 
   public getNewConversation(){

@@ -102,6 +102,8 @@ export class ConversationComponent {
       createdAt: new Date()
     };
 
+    this.selectedFile = promise.file;
+
     this.addUserMessage(promise.userMessage);
     this.isMessageLoading = true;
 
