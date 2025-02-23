@@ -46,7 +46,9 @@
 
           <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
             (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"
-            class="form-control" placeholder='Digite sua mensagem' name="message" required />
+            class="form-control" placeholder='Digite sua mensagem' name="message"
+            autocomplete="off"
+             required />
 
           <button type="submit" class="button-send" [disabled]="isMessageLoading">
             <mat-icon [ariaDisabled]="isMessageLoading" class="icon-send">send</mat-icon>

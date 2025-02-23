@@ -36,7 +36,9 @@
               [value]="messageForm.get('message')?.value"
               class="form-control" 
               placeholder='Envie sua mensagem' 
-              name="message" required 
+              name="message"
+              autocomplete="off"
+              required 
             />
   
             <button type="submit" id="sendButton" class="send-button">

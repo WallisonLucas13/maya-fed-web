@@ -1,5 +1,5 @@
 <div class="card-container" [class.selected]="isSelected" (click)="handleClick(conversaPreview?.id ?? '')">
-    <span class="title">{{conversaPreview?.title}}</span>
+    <span class="title" [title]="conversaPreview?.title">{{conversaPreview?.title}}</span>
     <div class="message-container">
         <span class="lastUserMessage">
             Você: {{conversaPreview?.lastUserMessage?.message}}
