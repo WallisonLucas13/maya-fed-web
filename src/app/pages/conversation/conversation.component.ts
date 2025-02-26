@@ -1,6 +1,6 @@
-import { Component, ElementRef, EventEmitter, Inject, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConversasService } from '../../services/conversas/conversas.service';
+import { ConversationsService } from '../../services/conversas/conversations.service';
 import { Conversa } from '../../models/conversation/conversa';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -15,11 +15,10 @@ import { LoadingDotsComponent } from "../../components/loading-dots/loading-dots
 import { LoadingService } from '../../services/loading/loading.service';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../services/auth/auth.service';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
 import { ionAnalytics, ionMenu } from '@ng-icons/ionicons';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { Title } from '@angular/platform-browser';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-conversation',
@@ -57,7 +56,7 @@ export class ConversationComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private conversasService: ConversasService,
+    private conversasService: ConversationsService,
     private loadingService: LoadingService,
     public authService: AuthService,
     public drawerControlService: DrawerControlService,
@@ -121,9 +120,7 @@ export class ConversationComponent {
           this.addSystemMessage(systemMessage);
 
           this.isMessageLoading = false;
-          setTimeout(() => {
-            this.conversasService.emitUpdateConversationPreview(this.conversationId ?? '')
-          }, 500)
+          this.conversasService.emitUpdateConversationPreview(this.conversationId ?? '')
           this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
           this.drawerControlService.showMenuTooltip();
 
@@ -221,9 +218,7 @@ export class ConversationComponent {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
 
-          setTimeout(() => {
-            this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
-          }, 500)
+          this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
         });
         return;
       }
@@ -233,9 +228,7 @@ export class ConversationComponent {
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
-          setTimeout(() => {
-            this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
-          }, 500)
+          this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
         })
     }
   }

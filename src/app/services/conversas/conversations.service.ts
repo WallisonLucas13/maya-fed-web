@@ -15,7 +15,7 @@ import { paths } from '../../../environments/paths';
 @Injectable({
   providedIn: 'root'
 })
-export class ConversasService {
+export class ConversationsService {
   private updateConversationPreview = new BehaviorSubject<string>('');
   private newConversation = new BehaviorSubject<{userMessage: string, file: File | null, systemSubscription: Promise<AxiosResponse<Mensagem, any>>}>({
      userMessage: '',
@@ -47,7 +47,7 @@ export class ConversasService {
           this.router.navigate(['/login']);
           this.loadingService.hide();
 
-          this.toastr.error(error.response.data, 'Acesso Negado!', {
+          this.toastr.warning(error.response.data, 'Acesso Negado!', {
             timeOut: 2000,
             positionClass: 'toast-bottom-right'
           });

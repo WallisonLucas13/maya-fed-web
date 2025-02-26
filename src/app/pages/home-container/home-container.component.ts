@@ -1,10 +1,10 @@
-import { Component, ElementRef, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CardConversaPreviewComponent } from "../../components/card-conversa-preview/card-conversa-preview.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { ConversasService } from '../../services/conversas/conversas.service';
+import { ConversationsService } from '../../services/conversas/conversations.service';
 import { ConversationPreview } from '../../models/preview/conversa-preview';
 import { AuthService } from '../../services/auth/auth.service';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
@@ -42,12 +42,13 @@ export class HomeContainerComponent{
   mayaLogoText: string = "Iniciar nova conversa";
 
   constructor(
-    private conversasService: ConversasService,
+    private conversasService: ConversationsService,
     public authService: AuthService, 
     private router: Router,
     public drawerControlService: DrawerControlService,
     private titleService: Title,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -60,16 +61,17 @@ export class HomeContainerComponent{
       if(this.authService.isLoggedIn() && token !== ''){
         this.loadingService.show();
 
+        this.getConversationsPreviewFromSession();
         this.getSelectedConversationBySession();
         this.getConversationsPreview();
         this.mayaLogoText = "Iniciar nova conversa";
-    
+      
         this.handleUpdateConversationPreview(token)
       }else{
         this.conversationsPreview = [];
         this.mayaLogoText = "Entre para falar comigo!";
       }
-    })
+    });
 
     window.addEventListener('beforeunload', this.saveDataInSession.bind(this));
   }
@@ -97,6 +99,8 @@ export class HomeContainerComponent{
     if(data){
       const previews = JSON.parse(sessionStorage.getItem('conversationsPreview') ?? '');
       this.conversationsPreview = previews;
+      this.loadingService.hide();
+      this.cdr.detectChanges();
     }
   }
 
@@ -107,6 +111,7 @@ export class HomeContainerComponent{
       this.loadingService.hide();
       this.scrollToTop()
       sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversationsPreview));
+      this.cdr.detectChanges();
     })
   }
 
@@ -115,6 +120,8 @@ export class HomeContainerComponent{
     .then(response => {
       this.updateConversationsPreviewList(response.data);
       this.selectedConversationId = response.data.id;
+      sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversationsPreview));
+      this.cdr.detectChanges();
     })
   }
 

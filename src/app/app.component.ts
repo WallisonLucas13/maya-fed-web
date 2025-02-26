@@ -6,7 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from './services/loading/loading.service';
 import { MarkdownConfigModule } from './configs/markdown-config.module';
-import { ConversasService } from './services/conversas/conversas.service';
+import { ConversationsService } from './services/conversas/conversations.service';
 
 @Component({
   selector: 'app-root',

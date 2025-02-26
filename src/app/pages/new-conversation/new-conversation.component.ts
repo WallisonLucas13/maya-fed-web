@@ -8,7 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CardMessageComponent } from '../../components/card-message/card-message.component';
 import { LoadingDotsComponent } from '../../components/loading-dots/loading-dots.component';
-import { ConversasService } from '../../services/conversas/conversas.service';
+import { ConversationsService } from '../../services/conversas/conversations.service';
 import { Router } from '@angular/router';
 import { LoadingService } from '../../services/loading/loading.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -29,7 +29,7 @@ export class NewConversationComponent {
   selectedFile: File | null = null;
 
   constructor(
-    private conversasService: ConversasService,
+    private conversasService: ConversationsService,
     private router: Router,
     public authService: AuthService,
     public drawerControlService: DrawerControlService
