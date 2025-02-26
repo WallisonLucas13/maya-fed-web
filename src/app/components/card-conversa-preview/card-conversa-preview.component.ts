@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ConversaPreview } from '../../models/preview/conversa-preview';
+import { ConversationPreview } from '../../models/preview/conversa-preview';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
@@ -11,7 +11,7 @@ import localePt from '@angular/common/locales/pt';
   styleUrl: './card-conversa-preview.component.css'
 })
 export class CardConversaPreviewComponent {
-  @Input() conversaPreview?: ConversaPreview;
+  @Input() conversaPreview?: ConversationPreview;
   @Input() isSelected?: boolean = false;
   @Output() cardClick = new EventEmitter<string>();
   datePipe = new DatePipe('pt-BR');

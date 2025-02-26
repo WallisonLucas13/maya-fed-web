@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { CardConversaPreviewComponent } from "../../components/card-conversa-preview/card-conversa-preview.component";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ConversasService } from '../../services/conversas/conversas.service';
-import { ConversaPreview } from '../../models/preview/conversa-preview';
+import { ConversationPreview } from '../../models/preview/conversa-preview';
 import { AuthService } from '../../services/auth/auth.service';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,10 +34,9 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 })
 export class HomeContainerComponent{
   @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
-  @ViewChild('drawer') private drawer?: ElementRef;
   
   username: string = 'Wallison';
-  conversasPreview: ConversaPreview[] = [];
+  conversationsPreview: ConversationPreview[] = [];
   selectedConversationId: string = '';
   isGlobalLoading: boolean = true;
   mayaLogoText: string = "Iniciar nova conversa";
@@ -62,19 +61,12 @@ export class HomeContainerComponent{
         this.loadingService.show();
 
         this.getSelectedConversationBySession();
-        this.getConversations();
+        this.getConversationsPreview();
         this.mayaLogoText = "Iniciar nova conversa";
     
-        this.conversasService.getUpdateConversations().subscribe(() => {
-          if(this.authService.isLoggedIn() && token !== ''){
-            this.getPreviewConversationsFromSession()
-            this.getConversations();
-            this.getSelectedConversationBySession();
-            this.mayaLogoText = "Iniciar nova conversa";
-          }
-        });
+        this.handleUpdateConversationPreview(token)
       }else{
-        this.conversasPreview = [];
+        this.conversationsPreview = [];
         this.mayaLogoText = "Entre para falar comigo!";
       }
     })
@@ -86,27 +78,43 @@ export class HomeContainerComponent{
     window.removeEventListener('beforeunload', this.saveDataInSession.bind(this));
   }
 
+  handleUpdateConversationPreview(token: string){
+    this.conversasService.getUpdateConversationPreview().subscribe(response => {
+      if(this.authService.isLoggedIn() && token !== '' && response){
+        this.getConversationPreview(response);
+      }
+    });
+  }
+
   saveDataInSession(event: BeforeUnloadEvent) {
     sessionStorage.setItem('token', this.authService.token.getValue() ?? '');
     sessionStorage.setItem('username', this.authService.username.getValue() ?? '');
-    this.conversasPreview = [];
+    this.conversationsPreview = [];
   }
 
-  getPreviewConversationsFromSession(){
+  getConversationsPreviewFromSession(){
     const data = sessionStorage.getItem('conversationsPreview');
     if(data){
       const previews = JSON.parse(sessionStorage.getItem('conversationsPreview') ?? '');
-      this.conversasPreview = previews;
+      this.conversationsPreview = previews;
     }
   }
 
-  getConversations(){
-    this.conversasService.getConversations()
-    .then(conversas => {
-      this.conversasPreview = conversas.data;
+  getConversationsPreview(){
+    this.conversasService.getConversationsPreview()
+    .then(conversations => {
+      this.conversationsPreview = conversations.data;
       this.loadingService.hide();
       this.scrollToTop()
-      sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversasPreview));
+      sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversationsPreview));
+    })
+  }
+
+  getConversationPreview(conversationId: string){
+    this.conversasService.getConversationPreview(conversationId)
+    .then(response => {
+      this.updateConversationsPreviewList(response.data);
+      this.selectedConversationId = response.data.id;
     })
   }
 
@@ -115,6 +123,16 @@ export class HomeContainerComponent{
       this.selectedConversationId = sessionStorage.getItem('lastConversationId') ?? '';
     }else{
       this.selectedConversationId = '';
+    }
+  }
+
+  updateConversationsPreviewList(conversationPreview: ConversationPreview) {
+    const index = this.conversationsPreview.findIndex(conversation => conversation.id === conversationPreview.id);
+    if (index !== -1) {
+      const [removedItem] = this.conversationsPreview.splice(index, 1);
+      this.conversationsPreview.unshift(conversationPreview);
+    } else {
+      this.conversationsPreview.unshift(conversationPreview);
     }
   }
 

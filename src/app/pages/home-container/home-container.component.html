@@ -31,9 +31,9 @@
     </div>
 
     <div #scrollTopTarget></div>
-    <div class="conversas-container" *ngFor="let conversaPreview of conversasPreview">
-      <app-card-conversa-preview [conversaPreview]="conversaPreview"
-        [isSelected]="conversaPreview.id === selectedConversationId" 
+    <div class="conversas-container" *ngFor="let conversationPreview of conversationsPreview">
+      <app-card-conversa-preview [conversaPreview]="conversationPreview"
+        [isSelected]="conversationPreview.id === selectedConversationId" 
         (cardClick)="handleCardClick($event)"
         >
       </app-card-conversa-preview>

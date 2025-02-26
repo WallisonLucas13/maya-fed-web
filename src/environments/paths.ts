@@ -1,5 +1,6 @@
 export const paths = {
-    conversations: '/conversas',
+    conversationsPreview: '/conversas/preview',
+    conversationPreview: '/conversa/preview',
     conversation: '/conversa',
     message: '/mensagem',
     messageWithFiles: '/files/mensagem',

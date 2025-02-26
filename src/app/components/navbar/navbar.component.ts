@@ -33,9 +33,9 @@ export class NavbarComponent {
 
   ngOnInit(): void {
     this.drawerControlService.menuTooltipOpened.subscribe((opened) => {
-      if(opened){
+      if(opened && this.menuIconTooltip){
         this.menuIconTooltip.show();
-      } else {
+      } else if(this.menuIconTooltip){
         this.menuIconTooltip.hide();
       }
     });

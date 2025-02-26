@@ -121,13 +121,15 @@ export class ConversationComponent {
           this.addSystemMessage(systemMessage);
 
           this.isMessageLoading = false;
-          this.conversasService.emitUpdateConversations();
+          setTimeout(() => {
+            this.conversasService.emitUpdateConversationPreview(this.conversationId ?? '')
+          }, 500)
           this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
           this.drawerControlService.showMenuTooltip();
 
           setTimeout(() => {
             this.drawerControlService.hideMenuTooltip();
-          }, 5000);
+          }, 6000);
         })
     })
   }
@@ -218,7 +220,10 @@ export class ConversationComponent {
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
-          this.conversasService.emitUpdateConversations();
+
+          setTimeout(() => {
+            this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
+          }, 500)
         });
         return;
       }
@@ -228,7 +233,9 @@ export class ConversationComponent {
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
-          this.conversasService.emitUpdateConversations();
+          setTimeout(() => {
+            this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
+          }, 500)
         })
     }
   }

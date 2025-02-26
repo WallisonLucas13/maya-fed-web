@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosHeaders, AxiosResponse } from 'axios';
-import { ConversaPreview } from '../../models/preview/conversa-preview';
+import { ConversationPreview } from '../../models/preview/conversa-preview';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Conversa } from '../../models/conversation/conversa';
 import { Mensagem } from '../../models/conversation/mensagem';
@@ -16,7 +16,7 @@ import { paths } from '../../../environments/paths';
   providedIn: 'root'
 })
 export class ConversasService {
-  private updateConversationsSubject = new BehaviorSubject<void>(undefined);
+  private updateConversationPreview = new BehaviorSubject<string>('');
   private newConversation = new BehaviorSubject<{userMessage: string, file: File | null, systemSubscription: Promise<AxiosResponse<Mensagem, any>>}>({
      userMessage: '',
      file: null,
@@ -33,10 +33,8 @@ export class ConversasService {
     this.authService.token.subscribe((token) => {
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        this.updateConversationsSubject.next();
       } else {
         axios.defaults.headers.common['Authorization'] = null;
-        this.updateConversationsSubject.next();
         this.router.navigate(['/login']);
       }
     });
@@ -59,9 +57,15 @@ export class ConversasService {
     );
   }
 
-  public getConversations(): Promise<AxiosResponse<ConversaPreview[]>> {
-    const url: string = `${environment.apiUrl}${paths.conversations}`;
-    return axios.get<ConversaPreview[]>(url);
+  public getConversationsPreview(): Promise<AxiosResponse<ConversationPreview[]>> {
+    const url: string = `${environment.apiUrl}${paths.conversationsPreview}`;
+    return axios.get<ConversationPreview[]>(url);
+  }
+
+  public getConversationPreview(conversationId: string): Promise<AxiosResponse<ConversationPreview>> {
+    const url: string = `${environment.apiUrl}${paths.conversationPreview}`;
+    const params = {conversationId: conversationId};
+    return axios.get<ConversationPreview>(url, {params: params});
   }
 
   public getConversation(conversationId: string): Promise<AxiosResponse<Conversa>> {
@@ -110,12 +114,12 @@ export class ConversasService {
     });
   }
 
-  public emitUpdateConversations(): void {
-    this.updateConversationsSubject.next();
+  public emitUpdateConversationPreview(conversationId: string): void {
+    this.updateConversationPreview.next(conversationId);
   }
 
-  public getUpdateConversations(): BehaviorSubject<void> {
-    return this.updateConversationsSubject;
+  public getUpdateConversationPreview(): BehaviorSubject<string> {
+    return this.updateConversationPreview;
   }
 
   public setNewConversation(userMessage: string, file: File | null, systemSubscription: Promise<AxiosResponse<Mensagem, any>>): void {

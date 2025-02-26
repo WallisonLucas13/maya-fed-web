@@ -1,6 +1,6 @@
 import { MensagemPreview } from "./mensagem-preview";
 
-export type ConversaPreview = {
+export type ConversationPreview = {
     id: string;
     title: string;
     username: string;
