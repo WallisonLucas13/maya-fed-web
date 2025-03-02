@@ -56,7 +56,7 @@ export class ConversationComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private conversasService: ConversationsService,
+    private conversationsService: ConversationsService,
     private loadingService: LoadingService,
     public authService: AuthService,
     public drawerControlService: DrawerControlService,
@@ -75,6 +75,7 @@ export class ConversationComponent {
       if(!isNewConversation){
         if (params.get('id') !== 'new') {
           this.conversationId = params.get('id');
+          this.conversationsService.setSelectedConversationPreview(this.conversationId ?? '');
           this.getConversation();
           this.selectedFile = null;
         } else {
@@ -92,7 +93,7 @@ export class ConversationComponent {
   }
 
   handleNewConversation() {
-    const promise = this.conversasService.getNewConversation().getValue();
+    const promise = this.conversationsService.getNewConversation().getValue();
     this.conversation = {
       id: '',
       username: '',
@@ -112,7 +113,7 @@ export class ConversationComponent {
       sessionStorage.setItem('isNewConversation', "true");
       sessionStorage.setItem('lastConversationId', this.conversationId);
 
-      this.conversasService.getConversation(this.conversationId)
+      this.conversationsService.getConversation(this.conversationId)
         .then(response => {
           this.conversation = response.data;
           this.conversation.messages = [];
@@ -120,7 +121,7 @@ export class ConversationComponent {
           this.addSystemMessage(systemMessage);
 
           this.isMessageLoading = false;
-          this.conversasService.emitUpdateConversationPreview(this.conversationId ?? '')
+          this.conversationsService.emitUpdateConversationPreview(this.conversationId ?? '')
           this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
           this.drawerControlService.showMenuTooltip();
 
@@ -134,7 +135,7 @@ export class ConversationComponent {
   getConversation() {
     this.loadingService.show();
     if (this.conversationId) {
-      this.conversasService.getConversation(this.conversationId)
+      this.conversationsService.getConversation(this.conversationId)
         .then(response => {
           this.conversation = response.data;
           this.groupMessagesByDate();
@@ -145,8 +146,9 @@ export class ConversationComponent {
 
           setTimeout(() => {
             this.loadingService.hide();
-            this.titleService.setTitle(response.data.title);
           }, 800)
+
+          this.titleService.setTitle(response.data.title);
         }).catch(() => {
             this.router.navigate(['/conversation'], { replaceUrl: true });
         })
@@ -212,23 +214,23 @@ export class ConversationComponent {
       }, 200)
 
       if(this.selectedFile){
-        this.conversasService
+        this.conversationsService
         .sendMessageWithFiles(this.conversationId ?? '', message, this.selectedFile)
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
 
-          this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
+          this.conversationsService.emitUpdateConversationPreview(response.data.conversationId)
         });
         return;
       }
 
-      this.conversasService
+      this.conversationsService
         .sendMessage(this.conversationId ?? '', message)
         .then(response => {
           this.isMessageLoading = false;
           this.addSystemMessage(response.data);
-          this.conversasService.emitUpdateConversationPreview(response.data.conversationId)
+          this.conversationsService.emitUpdateConversationPreview(response.data.conversationId)
         })
     }
   }
@@ -265,13 +267,6 @@ export class ConversationComponent {
     }
   }
 
-  scrollToTop(): void {
-    try {
-      this.scrollTopTarget?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    } catch (err) {
-      console.error('Scroll to top failed', err);
-    }
-  }
   redirectToAnalytics(){
     this.router.navigate(['/analytics']);
   }

@@ -15,6 +15,12 @@ import { Title } from '@angular/platform-browser'; // Importar Title
 import { LoadingService } from '../../services/loading/loading.service';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 
+
+export enum BehaviorEnum {
+  AUTO = 'auto',
+  SMOOTH = 'smooth',
+};
+
 @Component({
   selector: 'app-home-container',
   standalone: true,
@@ -33,16 +39,14 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeContainerComponent{
-  @ViewChild('scrollTopTarget') private scrollTopTarget?: ElementRef;
-  
+    
   username: string = 'Wallison';
   conversationsPreview: ConversationPreview[] = [];
-  selectedConversationId: string = '';
   isGlobalLoading: boolean = true;
   mayaLogoText: string = "Iniciar nova conversa";
 
   constructor(
-    private conversasService: ConversationsService,
+    public conversationsService: ConversationsService,
     public authService: AuthService, 
     private router: Router,
     public drawerControlService: DrawerControlService,
@@ -62,15 +66,16 @@ export class HomeContainerComponent{
         this.loadingService.show();
 
         this.getConversationsPreviewFromSession();
-        this.getSelectedConversationBySession();
+        this.getSelectedConversationPreviewBySession();
         this.getConversationsPreview();
         this.mayaLogoText = "Iniciar nova conversa";
       
-        this.handleUpdateConversationPreview(token)
+        this.handleUpdateConversationPreview(token);
       }else{
         this.conversationsPreview = [];
         this.mayaLogoText = "Entre para falar comigo!";
       }
+      this.cdr.detectChanges();
     });
 
     window.addEventListener('beforeunload', this.saveDataInSession.bind(this));
@@ -81,7 +86,7 @@ export class HomeContainerComponent{
   }
 
   handleUpdateConversationPreview(token: string){
-    this.conversasService.getUpdateConversationPreview().subscribe(response => {
+    this.conversationsService.getUpdateConversationPreview().subscribe(response => {
       if(this.authService.isLoggedIn() && token !== '' && response){
         this.getConversationPreview(response);
       }
@@ -105,32 +110,36 @@ export class HomeContainerComponent{
   }
 
   getConversationsPreview(){
-    this.conversasService.getConversationsPreview()
+    this.conversationsService.getConversationsPreview()
     .then(conversations => {
       this.conversationsPreview = conversations.data;
       this.loadingService.hide();
-      this.scrollToTop()
       sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversationsPreview));
       this.cdr.detectChanges();
     })
   }
 
   getConversationPreview(conversationId: string){
-    this.conversasService.getConversationPreview(conversationId)
+    this.conversationsService.getConversationPreview(conversationId)
     .then(response => {
       this.updateConversationsPreviewList(response.data);
-      this.selectedConversationId = response.data.id;
+      this.conversationsService
+      .setSelectedConversationPreview(response.data.id);
       sessionStorage.setItem('conversationsPreview', JSON.stringify(this.conversationsPreview));
+
+      this.scrollToConversationPreview(BehaviorEnum.SMOOTH);
       this.cdr.detectChanges();
     })
   }
 
-  getSelectedConversationBySession(){
-    if(sessionStorage.getItem('lastConversationId')){
-      this.selectedConversationId = sessionStorage.getItem('lastConversationId') ?? '';
-    }else{
-      this.selectedConversationId = '';
-    }
+  getSelectedConversationPreviewBySession(){
+    const conversationPreviewId = sessionStorage.getItem('lastConversationId') ?? '';
+    this.conversationsService
+      .setSelectedConversationPreview(conversationPreviewId);
+      
+      setTimeout(() => {
+        this.scrollToConversationPreview(BehaviorEnum.AUTO);
+      }, 300);
   }
 
   updateConversationsPreviewList(conversationPreview: ConversationPreview) {
@@ -141,10 +150,12 @@ export class HomeContainerComponent{
     } else {
       this.conversationsPreview.unshift(conversationPreview);
     }
+    this.cdr.detectChanges();
   }
 
   handleCardClick(id: string){
-    this.selectedConversationId = id;
+    this.conversationsService
+      .setSelectedConversationPreview(id)
     sessionStorage.setItem('lastConversationId', id);
     this.router.navigate(['/conversation', id]);
     
@@ -156,7 +167,8 @@ export class HomeContainerComponent{
   redirectToNewConversation(){
     if(!this.authService.isLoggedIn())return;
     sessionStorage.clear();
-    this.selectedConversationId = '';
+    this.conversationsService
+      .setSelectedConversationPreview('');
     this.router.navigate(['/conversation']);
     this.titleService.setTitle("Fale com a Maya")
 
@@ -165,9 +177,10 @@ export class HomeContainerComponent{
     }
   }
 
-  scrollToTop(): void {
+  scrollToConversationPreview(behavior: BehaviorEnum): void {
     try {
-      this.scrollTopTarget?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      const refSelectedPreview = document.getElementById("refSelectedPreview") as HTMLElement;
+      refSelectedPreview.scrollIntoView({ behavior: behavior, block: 'start' });
     } catch (err) {
       console.error('Scroll to top failed', err);
     }

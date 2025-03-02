@@ -35,23 +35,33 @@
         <form class="sendMessage-form" [formGroup]="messageForm" (ngSubmit)="sendMessage()">
           
           <label for="file-input" class="icon-attachment">
-            <mat-icon>attach_file</mat-icon>
+            <mat-icon title="Anexar arquivos">attach_file</mat-icon>
           </label>
           <input 
-          id="file-input" 
-          type="file"
-          style="display: none;"
-          formControlName="file"
-          (change)="onFileSelected($event)"/>
-
-          <input formControlName="message" type="text" (blur)="messageForm.get('message')?.markAsTouched()"
-            (input)="messageForm.get('message')?.updateValueAndValidity()" [value]="messageForm.get('message')?.value"
-            class="form-control" placeholder='Digite sua mensagem' name="message"
+            id="file-input" 
+            type="file"
+            style="display: none;"
+            formControlName="file"
+            (change)="onFileSelected($event)"
+            />
+          <input 
+            formControlName="message" 
+            type="text" 
+            (blur)="messageForm.get('message')?.markAsTouched()"
+            (input)="messageForm.get('message')?.updateValueAndValidity()" 
+            [value]="messageForm.get('message')?.value"
+            class="form-control" 
+            placeholder='Digite sua mensagem' name="message"
             autocomplete="off"
              required />
 
           <button type="submit" class="button-send" [disabled]="isMessageLoading">
-            <mat-icon [ariaDisabled]="isMessageLoading" class="icon-send">send</mat-icon>
+            <mat-icon
+              title="Enviar mensagem"
+              [ariaDisabled]="isMessageLoading" 
+              class="icon-send"
+              >send
+            </mat-icon>
           </button>
         </form>
       </div>

@@ -1,11 +1,20 @@
-<div class="card-container" [class.selected]="isSelected" (click)="handleClick(conversaPreview?.id ?? '')">
-    <span class="title" [title]="conversaPreview?.title">{{conversaPreview?.title}}</span>
+<div 
+    class="card-container" 
+    [class.selected]="isSelected" 
+    (click)="handleClick(conversationPreview?.id ?? '')"
+    >
+    <span 
+        class="title" 
+        [title]="conversationPreview?.title"
+    >
+    {{conversationPreview?.title}}
+    </span>
     <div class="message-container">
         <span class="lastUserMessage">
-            Você: {{conversaPreview?.lastUserMessage?.message}}
+            Você: {{conversationPreview?.lastUserMessage?.message}}
         </span>
         <span class="lastUserMessageCreateAt">
-            {{ formatDate(conversaPreview?.lastUserMessage?.createdAt) }}
+            {{ formatDate(conversationPreview?.lastUserMessage?.createdAt) }}
         </span>
     </div>
 </div>

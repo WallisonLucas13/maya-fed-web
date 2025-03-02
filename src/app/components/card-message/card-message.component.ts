@@ -22,6 +22,7 @@ import { DrawerControlService } from '../../services/drawer/drawer-control.servi
 export class CardMessageComponent {
   @ViewChild('cardMessage') cardMessage?: ElementRef;
   @Input() message?: Mensagem;
+  messageTooltip?: string = "Clique para copiar a mensagem";
 
   constructor(
     private renderer: Renderer2,

@@ -1,14 +1,15 @@
 <mat-drawer-container class="example-container">
 
-  <mat-drawer #drawer 
+  <mat-drawer 
+    #drawer 
     [mode]="drawerControlService.drawerMode.getValue()" 
     [opened]="drawerControlService.drawerOpened.getValue()"
-    (openedChange)="drawerControlService.drawerOpened.next($event)">
-    
+    (openedChange)="drawerControlService.drawerOpened.next($event)"
+    >
     <div class="maya-card">
       <div class="sub-maya-card" (click)="redirectToNewConversation()">
         <span class="maya-span">Maya</span>
-        <span class="maya-iniciar-conversa">{{mayaLogoText}}</span>
+        <span class="maya-iniciar-conversa" title="Clique para falar com a Maya">{{mayaLogoText}}</span>
       </div>
       <mat-icon 
             class="close"
@@ -30,11 +31,12 @@
       </div>
     </div>
 
-    <div #scrollTopTarget></div>
     <div class="conversas-container" *ngFor="let conversationPreview of conversationsPreview">
-      <app-card-conversa-preview [conversaPreview]="conversationPreview"
-        [isSelected]="conversationPreview.id === selectedConversationId" 
+      <app-card-conversa-preview 
+        [conversationPreview]="conversationPreview"
+        [isSelected]="conversationPreview.id === conversationsService.getSelectedConversationPreview()" 
         (cardClick)="handleCardClick($event)"
+        [attr.id]="conversationPreview.id === conversationsService.getSelectedConversationPreview() ? 'refSelectedPreview' : null"
         >
       </app-card-conversa-preview>
     </div>

@@ -23,6 +23,8 @@ export class ConversationsService {
      systemSubscription: Promise.resolve({} as AxiosResponse<Mensagem, any>) 
   });
 
+  private selectedConversationPreview = new BehaviorSubject<string>('');
+
   constructor(
     private authService: AuthService, 
     private router: Router,
@@ -132,5 +134,12 @@ export class ConversationsService {
 
   public getNewConversation(){
     return this.newConversation;
+  }
+
+  public setSelectedConversationPreview(conversationId: string): void {
+    this.selectedConversationPreview.next(conversationId);
+  }
+  public getSelectedConversationPreview(): string {
+    return this.selectedConversationPreview.getValue();
   }
 }
