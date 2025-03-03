@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConversationsService } from '../../services/conversas/conversations.service';
 import { Conversa } from '../../models/conversation/conversa';
@@ -60,7 +60,8 @@ export class ConversationComponent {
     private loadingService: LoadingService,
     public authService: AuthService,
     public drawerControlService: DrawerControlService,
-    private titleService: Title
+    private titleService: Title,
+    public cdr: ChangeDetectorRef
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
@@ -139,6 +140,7 @@ export class ConversationComponent {
         .then(response => {
           this.conversation = response.data;
           this.groupMessagesByDate();
+          this.cdr.detectChanges();
 
           setTimeout(() => {
             this.scrollToBottom();
@@ -281,5 +283,13 @@ export class ConversationComponent {
   removeFile(): void {
     this.selectedFile = null;
     this.messageForm.get('file')?.reset();
+  }
+
+  trackByDate(index: number, date: string): string {
+    return date;
+  }
+  
+  trackByMessage(index: number, message: Mensagem): string {
+    return message.id;
   }
 }

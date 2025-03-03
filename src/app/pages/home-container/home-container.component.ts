@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -36,7 +36,8 @@ export enum BehaviorEnum {
   templateUrl: './home-container.component.html',
   styleUrl: './home-container.component.css',
   providers: [provideIcons({ ionCloseSharp })],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeContainerComponent{
     
@@ -153,10 +154,11 @@ export class HomeContainerComponent{
     this.cdr.detectChanges();
   }
 
-  handleCardClick(id: string){
+  onCardClick(id: string){
     this.conversationsService
       .setSelectedConversationPreview(id)
     sessionStorage.setItem('lastConversationId', id);
+    this.loadingService.show();
     this.router.navigate(['/conversation', id]);
     
     if(this.drawerControlService.isAndroid.getValue()){
@@ -180,7 +182,9 @@ export class HomeContainerComponent{
   scrollToConversationPreview(behavior: BehaviorEnum): void {
     try {
       const refSelectedPreview = document.getElementById("refSelectedPreview") as HTMLElement;
-      refSelectedPreview.scrollIntoView({ behavior: behavior, block: 'start' });
+      if(refSelectedPreview){
+        refSelectedPreview.scrollIntoView({ behavior: behavior, block: 'start' });
+      }
     } catch (err) {
       console.error('Scroll to top failed', err);
     }

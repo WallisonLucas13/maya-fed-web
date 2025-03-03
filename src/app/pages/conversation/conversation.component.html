@@ -1,11 +1,11 @@
 <div class="container">
   
   <div #messageContainer class="conversation-container">
-    <div *ngFor="let date of getDates()" class="date-container">
+    <div *ngFor="let date of getDates(); trackBy: trackByDate" class="date-container">
       <div class="date-divider">
         <span>{{ date }}</span>
       </div>
-      <div *ngFor="let message of groupedMessages[date]" class="messages">
+      <div *ngFor="let message of groupedMessages[date]; trackBy: trackByMessage" class="messages">
         <app-card-message [message]="message"></app-card-message>
       </div>
     </div>

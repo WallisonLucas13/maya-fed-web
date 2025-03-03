@@ -35,7 +35,7 @@
       <app-card-conversa-preview 
         [conversationPreview]="conversationPreview"
         [isSelected]="conversationPreview.id === conversationsService.getSelectedConversationPreview()" 
-        (cardClick)="handleCardClick($event)"
+        (cardClick)="onCardClick($event)"
         [attr.id]="conversationPreview.id === conversationsService.getSelectedConversationPreview() ? 'refSelectedPreview' : null"
         >
       </app-card-conversa-preview>
