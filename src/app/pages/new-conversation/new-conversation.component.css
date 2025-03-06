@@ -240,7 +240,7 @@
  } 
 }
 
-.sendMessage-form input {
+.sendMessage-form textarea {
   flex: 1;
   border: none;
   outline: none;
@@ -249,33 +249,15 @@
   overflow-x: hidden;
   box-sizing: border-box;
   width: 90%;
+  resize: none;
+  font-family: 'Arial', sans-serif;
 }
 
-.sendMessage-form.error input{
-  flex: 1;
-  outline: none;
-  background: transparent;
-  padding: 10px;
-  font-size: 14px;
+.sendMessage-form text::placeholder {
+  font-size: 15px;
+  color: #aaa;
   overflow-x: hidden;
-}
-
-.sendMessage-form input::placeholder {
-  font-size: 12pt;
-  color: #aaa; /* Placeholder em cinza claro */
-  overflow-x: hidden;
-}
-
-.sendMessage-form.error input::placeholder{
-  font-size: 12pt;
-  color: red; /* Placeholder em cinza claro */
-  overflow-x: hidden;
-}
-
-.error-message {
-  color: red; /* Cor da mensagem de erro */
-  font-size: 12px; /* Tamanho da fonte da mensagem de erro */
-  margin-top: 5px; /* Espaçamento acima da mensagem de erro */
+  font-family: 'Arial', sans-serif;
 }
 
 .send-button {

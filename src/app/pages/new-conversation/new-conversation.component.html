@@ -28,7 +28,7 @@
             formControlName="file"
             (change)="onFileSelected($event)"/>
   
-            <input 
+            <textarea 
               formControlName="message" 
               type="text" 
               (blur)="messageForm.get('message')?.markAsTouched()"
@@ -39,7 +39,7 @@
               name="message"
               autocomplete="off"
               required 
-            />
+            ></textarea>
   
             <button type="submit" id="sendButton" class="send-button">
               <mat-icon class="icon-send">send</mat-icon>
