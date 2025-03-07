@@ -240,23 +240,31 @@
  } 
 }
 
+.sendMessage-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
 .sendMessage-form textarea {
   flex: 1;
   border: none;
   outline: none;
-  background: transparent;
   font-size: 14px;
-  overflow-x: hidden;
-  box-sizing: border-box;
   width: 90%;
-  resize: none;
   font-family: 'Arial', sans-serif;
+  padding: 7px;
+  height: 20px;
+  resize: none;
+  background-color: #f8f9f9;
+  border-radius: 6px;
 }
 
 .sendMessage-form text::placeholder {
   font-size: 15px;
   color: #aaa;
-  overflow-x: hidden;
+  overflow: hidden;
   font-family: 'Arial', sans-serif;
 }
 

@@ -44,8 +44,8 @@ export class NewConversationComponent {
 
   sendMessage() {
     const message = this.messageForm.get('message')?.value;
-    if (!this.messageForm.controls['message'].invalid) {
-      this.messageForm.get('message')?.reset();
+    if (this.isValidMessageForm()) {
+      this.resetTextarea();
 
       let promisse;
 
@@ -60,6 +60,11 @@ export class NewConversationComponent {
       this.conversasService.setNewConversation(message, this.selectedFile ?? null, promisse);
       this.router.navigate(['/conversation', 'new']);
     }
+  }
+
+  isValidMessageForm(): boolean{
+    const trimmed = this.messageForm.get('message')?.value.trim();
+    return trimmed.length > 0 && this.messageForm.valid;
   }
 
   logout(){
@@ -79,4 +84,17 @@ export class NewConversationComponent {
     this.messageForm.get('file')?.reset();
   }
 
+  adjustTextareaHeight(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = '20px';
+    textarea.style.height = `${textarea.scrollHeight - 14}px`;
+  }
+
+  resetTextarea(): void {
+    this.messageForm.reset();
+    const textarea = document.querySelector('textarea[formControlName="message"]') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = '20px';
+    }
+  }
 }

@@ -46,9 +46,7 @@
             />
           <textarea
             formControlName="message" 
-            (blur)="messageForm.get('message')?.markAsTouched()"
-            (input)="messageForm.get('message')?.updateValueAndValidity()" 
-            [value]="messageForm.get('message')?.value"
+            (input)="adjustTextareaHeight($event)"
             class="form-control" 
             placeholder='Digite sua mensagem' name="message"
             autocomplete="off"

@@ -68,7 +68,7 @@
   .sendMessage-form {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
     padding: 10px;
   }
   
@@ -77,12 +77,14 @@
     border: none;
     outline: none;
     background: transparent;
-    padding: 5px;
+    padding: 7px;
+    height: 20px;
     font-size: 14px;
-    overflow-x: hidden;
-    box-sizing: border-box;
+    overflow: hidden;
     resize: none;
     font-family: 'Arial', sans-serif;
+    background-color: #f8f9f9;
+    border-radius: 6px;
   }
   .sendMessage-form textarea::placeholder {
     font-size: 15px;
@@ -90,7 +92,7 @@
     overflow-x: hidden;
     font-family: 'Arial', sans-serif;
   }
-
+  
   .button-send{
     display: flex;
     justify-content: center;

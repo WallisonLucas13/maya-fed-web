@@ -30,10 +30,7 @@
   
             <textarea 
               formControlName="message" 
-              type="text" 
-              (blur)="messageForm.get('message')?.markAsTouched()"
-              (input)="messageForm.get('message')?.updateValueAndValidity()" 
-              [value]="messageForm.get('message')?.value"
+              type="text"
               class="form-control" 
               placeholder='Envie sua mensagem' 
               name="message"

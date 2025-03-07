@@ -206,10 +206,10 @@ export class ConversationComponent {
   }
 
   sendMessage(){
-    if (this.messageForm.valid && this.loadingService.isHidden()) {
+    if (this.isValidMessageForm() && this.loadingService.isHidden()) {
       this.isMessageLoading = true;
       const message = this.messageForm.get('message')?.value;
-      this.messageForm.reset();
+      this.resetTextarea();
       this.addUserMessage(message);
       setTimeout(() => {
         this.scrollToBottom();
@@ -235,6 +235,11 @@ export class ConversationComponent {
           this.conversationsService.emitUpdateConversationPreview(response.data.conversationId)
         })
     }
+  }
+
+  isValidMessageForm(): boolean{
+    const trimmed = this.messageForm.get('message')?.value.trim();
+    return trimmed.length > 0 && this.messageForm.valid;
   }
 
   addUserMessage(messageText: string) {
@@ -291,5 +296,19 @@ export class ConversationComponent {
   
   trackByMessage(index: number, message: Mensagem): string {
     return message.id;
+  }
+
+  adjustTextareaHeight(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = '20px';
+    textarea.style.height = `${textarea.scrollHeight - 14}px`;
+  }
+
+  resetTextarea(): void {
+    this.messageForm.reset();
+    const textarea = document.querySelector('textarea[formControlName="message"]') as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = '20px';
+    }
   }
 }
