@@ -63,7 +63,6 @@ export class NewConversationComponent {
   }
 
   onEnterPress(event: KeyboardEvent): void {
-    console.log(event)
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.sendMessage();
