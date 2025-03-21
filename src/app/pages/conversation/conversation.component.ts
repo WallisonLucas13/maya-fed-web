@@ -205,6 +205,14 @@ export class ConversationComponent {
     );
   }
 
+  onEnterPress(event: KeyboardEvent): void {
+    console.log(event)
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage();
+    }
+  }
+
   sendMessage(){
     if (this.isValidMessageForm() && this.loadingService.isHidden()) {
       this.isMessageLoading = true;

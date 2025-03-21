@@ -29,7 +29,8 @@
             (change)="onFileSelected($event)"/>
   
             <textarea 
-              formControlName="message" 
+              formControlName="message"
+              (keydown)="onEnterPress($event)"
               type="text"
               class="form-control" 
               placeholder='Envie sua mensagem' 

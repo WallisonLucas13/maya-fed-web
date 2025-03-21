@@ -62,6 +62,14 @@ export class NewConversationComponent {
     }
   }
 
+  onEnterPress(event: KeyboardEvent): void {
+    console.log(event)
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage();
+    }
+  }
+
   isValidMessageForm(): boolean{
     const trimmed = this.messageForm.get('message')?.value.trim();
     return trimmed.length > 0 && this.messageForm.valid;

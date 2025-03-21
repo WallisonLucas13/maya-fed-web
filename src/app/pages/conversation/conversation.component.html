@@ -46,6 +46,7 @@
             />
           <textarea
             formControlName="message" 
+            (keydown)="onEnterPress($event)"
             (input)="adjustTextareaHeight($event)"
             class="form-control" 
             placeholder='Digite sua mensagem' name="message"
