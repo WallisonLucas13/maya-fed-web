@@ -19,6 +19,8 @@ import { provideIcons } from '@ng-icons/core';
 import { ionAnalytics, ionMenu } from '@ng-icons/ionicons';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
+import { AxiosResponse } from 'axios';
 
 @Component({
   selector: 'app-conversation',
@@ -34,10 +36,10 @@ import { Title } from '@angular/platform-browser';
     MatProgressSpinnerModule,
     LoadingDotsComponent,
     MatTooltipModule
-],
+  ],
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.css',
-  viewProviders: [provideIcons({ ionMenu, ionAnalytics})]
+  viewProviders: [provideIcons({ ionMenu, ionAnalytics })]
 })
 export class ConversationComponent {
   @ViewChild('scrollTarget') private scrollTarget?: ElementRef;
@@ -61,7 +63,8 @@ export class ConversationComponent {
     public authService: AuthService,
     public drawerControlService: DrawerControlService,
     private titleService: Title,
-    public cdr: ChangeDetectorRef
+    public cdr: ChangeDetectorRef,
+    private toastr: ToastrService
   ) {
     registerLocaleData(localePt, 'pt-BR');
     this.messageForm = new FormGroup({
@@ -73,7 +76,7 @@ export class ConversationComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const isNewConversation = sessionStorage.getItem('isNewConversation');
-      if(!isNewConversation){
+      if (!isNewConversation) {
         if (params.get('id') !== 'new') {
           this.conversationId = params.get('id');
           this.conversationsService.setSelectedConversationPreview(this.conversationId ?? '');
@@ -82,13 +85,13 @@ export class ConversationComponent {
         } else {
           this.handleNewConversation();
         }
-      }else{
+      } else {
         sessionStorage.removeItem('isNewConversation');
       }
     });
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
     sessionStorage.removeItem('lastConversationId');
   }
@@ -108,29 +111,33 @@ export class ConversationComponent {
     this.addUserMessage(promise.userMessage);
     this.isMessageLoading = true;
 
-    promise.systemSubscription.then(response => {
-      const systemMessage = response.data;
-      this.conversationId = systemMessage.conversationId;
-      sessionStorage.setItem('isNewConversation', "true");
-      sessionStorage.setItem('lastConversationId', this.conversationId);
+    promise.systemSubscription
+      .then(response => {
+        const systemMessage = response.data;
+        this.conversationId = systemMessage.conversationId;
+        sessionStorage.setItem('isNewConversation', "true");
+        sessionStorage.setItem('lastConversationId', this.conversationId);
 
-      this.conversationsService.getConversation(this.conversationId)
-        .then(response => {
-          this.conversation = response.data;
-          this.conversation.messages = [];
-          this.addUserMessage(promise.userMessage);
-          this.addSystemMessage(systemMessage);
+        this.conversationsService.getConversation(this.conversationId)
+          .then(response => {
+            this.conversation = response.data;
+            this.conversation.messages = [];
+            this.addUserMessage(promise.userMessage);
+            this.addSystemMessage(systemMessage);
 
-          this.isMessageLoading = false;
-          this.conversationsService.emitUpdateConversationPreview(this.conversationId ?? '')
-          this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
-          this.drawerControlService.showMenuTooltip();
+            this.isMessageLoading = false;
+            this.conversationsService.emitUpdateConversationPreview(this.conversationId ?? '')
+            this.router.navigate(['/conversation', this.conversationId], { replaceUrl: true });
+            this.drawerControlService.showMenuTooltip();
 
-          setTimeout(() => {
-            this.drawerControlService.hideMenuTooltip();
-          }, 6000);
-        })
-    })
+            setTimeout(() => {
+              this.drawerControlService.hideMenuTooltip();
+            }, 6000);
+
+          })
+      }).catch(() => {
+        this.handleGetNewConversationError();
+      })
   }
 
   getConversation() {
@@ -138,23 +145,49 @@ export class ConversationComponent {
     if (this.conversationId) {
       this.conversationsService.getConversation(this.conversationId)
         .then(response => {
-          this.conversation = response.data;
-          this.groupMessagesByDate();
-          this.cdr.detectChanges();
-
-          setTimeout(() => {
-            this.scrollToBottom();
-          }, 300)
-
-          setTimeout(() => {
-            this.loadingService.hide();
-          }, 800)
-
-          this.titleService.setTitle(response.data.title);
+          this.handleGetConversationSuccess(response);
         }).catch(() => {
-            this.router.navigate(['/conversation'], { replaceUrl: true });
+          this.handleGetConversationError();
         })
     }
+  }
+
+  handleGetConversationSuccess(response: AxiosResponse<Conversa>) {
+    this.conversation = response.data;
+    this.groupMessagesByDate();
+    this.cdr.detectChanges();
+
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 300)
+
+    setTimeout(() => {
+      this.loadingService.hide();
+    }, 800)
+
+    this.titleService.setTitle(response.data.title);
+  }
+
+  handleGetConversationError() {
+    this.router.navigate(['/conversation'], { replaceUrl: true });
+    sessionStorage.setItem('lastConversationId', '');
+    this.conversationsService.setSelectedConversationPreview('');
+    this.loadingService.hide();
+    this.toastr.error('Falha ao obter conversa! Contate os administradores do sistema.', '', {
+      timeOut: 4000,
+      positionClass: 'toast-top-right'
+    });
+  }
+
+  handleGetNewConversationError() {
+    this.router.navigate(['/conversation'], { replaceUrl: true });
+    sessionStorage.setItem('lastConversationId', '');
+    this.conversationsService.setSelectedConversationPreview('');
+    this.loadingService.hide();
+    this.toastr.error('Falha ao enviar mensagem! Contate os administradores do sistema.', '', {
+      timeOut: 4000,
+      positionClass: 'toast-top-right'
+    });
   }
 
   groupMessagesByDate(): void {
@@ -212,7 +245,7 @@ export class ConversationComponent {
     }
   }
 
-  sendMessage(){
+  sendMessage() {
     if (this.isValidMessageForm() && this.loadingService.isHidden()) {
       this.isMessageLoading = true;
       const message = this.messageForm.get('message')?.value;
@@ -222,15 +255,18 @@ export class ConversationComponent {
         this.scrollToBottom();
       }, 200)
 
-      if(this.selectedFile){
+      if (this.selectedFile) {
         this.conversationsService
-        .sendMessageWithFiles(this.conversationId ?? '', message, this.selectedFile)
-        .then(response => {
-          this.isMessageLoading = false;
-          this.addSystemMessage(response.data);
+          .sendMessageWithFiles(this.conversationId ?? '', message, this.selectedFile)
+          .then(response => {
+            this.isMessageLoading = false;
+            this.addSystemMessage(response.data);
 
-          this.conversationsService.emitUpdateConversationPreview(response.data.conversationId)
-        });
+            this.conversationsService.emitUpdateConversationPreview(response.data.conversationId)
+          })
+          .catch(() => {
+            this.handleOnSendMessageError();
+          });
         return;
       }
 
@@ -241,10 +277,22 @@ export class ConversationComponent {
           this.addSystemMessage(response.data);
           this.conversationsService.emitUpdateConversationPreview(response.data.conversationId)
         })
+        .catch(() => {
+          this.handleOnSendMessageError();
+        });
     }
   }
 
-  isValidMessageForm(): boolean{
+  handleOnSendMessageError() {
+    this.isMessageLoading = false;
+    this.toastr.error('Falha ao enviar mensagem! Contate os administradores do sistema.', '', {
+      timeOut: 4000,
+      positionClass: 'toast-top-right'
+    });
+    this.cdr.detectChanges();
+  }
+
+  isValidMessageForm(): boolean {
     const trimmed = this.messageForm.get('message')?.value.trim();
     return trimmed.length > 0 && this.messageForm.valid;
   }
@@ -281,7 +329,7 @@ export class ConversationComponent {
     }
   }
 
-  redirectToAnalytics(){
+  redirectToAnalytics() {
     this.router.navigate(['/analytics']);
   }
 
@@ -300,7 +348,7 @@ export class ConversationComponent {
   trackByDate(index: number, date: string): string {
     return date;
   }
-  
+
   trackByMessage(index: number, message: Mensagem): string {
     return message.id;
   }

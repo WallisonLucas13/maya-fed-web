@@ -50,8 +50,8 @@ export class ConversationsService {
           this.loadingService.hide();
 
           this.toastr.warning(error.response.data, 'Acesso Negado!', {
-            timeOut: 2000,
-            positionClass: 'toast-bottom-right'
+            timeOut: 3000,
+            positionClass: 'toast-top-right'
           });
         }
         return Promise.reject(error);

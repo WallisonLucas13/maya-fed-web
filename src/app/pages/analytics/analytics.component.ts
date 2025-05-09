@@ -1,4 +1,4 @@
-import { Component, Output, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AnalyticsService } from '../../services/analytics/analytics.service';
 import { TotalMessagesInsight } from '../../models/analytics/analytics';
 import { DatePipe } from '@angular/common';
@@ -6,9 +6,8 @@ import { LoadingService } from '../../services/loading/loading.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
 import { MatIconModule } from '@angular/material/icon';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
 import { ionAnalytics, ionMenu } from '@ng-icons/ionicons';
-import ApexCharts from 'apexcharts'
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -21,8 +20,10 @@ import {
   ApexFill,
   NgApexchartsModule
 } from "ng-apexcharts";
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { DateFilterComponent } from "../../components/date-filter/date-filter.component";
+import { ConversationsService } from '../../services/conversas/conversations.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -67,20 +68,51 @@ export class AnalyticsComponent {
     private datePipe: DatePipe,
     public loadingService: LoadingService,
     public authService: AuthService,
-    public drawerControlService: DrawerControlService
+    public drawerControlService: DrawerControlService,
+    public conversationsService: ConversationsService,
+    public toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadingService.show();
+    this.resetLastConversationId();
     this.fetchTotalMessages();
   }
 
+  resetLastConversationId(){
+    this.conversationsService.setSelectedConversationPreview('');
+  }
+
   fetchTotalMessages(){
-    this.analyticsService.getTotalMessagesInsight().then(response => {
+    this.analyticsService.getTotalMessagesInsight()
+    .then(response => {
       this.totalMessagesList = response.data;
       this.filterChartByDate(new Date());
       setTimeout(() => {this.loadingService.hide()}, 500)
     })
+    .catch(() => {
+      this.handleFetchTotalMessagesError();
+    })
+  }
+
+  handleFetchTotalMessagesError(){
+    this.loadingService.hide();
+    this.redirectToLastConversation();
+      this.toastr.error('Erro ao buscar dados de mensagens! Contate os administradores do sistema.', '', {
+        timeOut: 2000,
+        positionClass: 'toast-top-right'
+      });
+  }
+
+  redirectToLastConversation(){
+    const lastConversationId = sessionStorage.getItem('lastConversationId');
+    if(lastConversationId && lastConversationId !== ''){
+      this.router.navigate(['/conversation', lastConversationId]);
+      return;
+    }
+
+    this.router.navigate(['/conversation'], { replaceUrl: true });
   }
 
   transformTotalMessagesChart(totalMessagesList: TotalMessagesInsight[]){

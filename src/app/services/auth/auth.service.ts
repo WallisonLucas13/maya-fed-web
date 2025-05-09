@@ -36,7 +36,7 @@ export class AuthService {
 
         this.toastr.success('Conta criada com sucesso!', `Seja bem vindo ${credentials.username}!`, {
           timeOut: 3000,
-          positionClass: 'toast-bottom-center'
+          positionClass: 'toast-top-right'
         });
         
         setTimeout(() => {
@@ -47,7 +47,7 @@ export class AuthService {
         if(error.response.status === 400){
           this.toastr.error(error.response.data, '', {
             timeOut: 2000,
-            positionClass: 'toast-bottom-right'
+            positionClass: 'toast-top-right'
           });
           this.isAuthenticated = false;
           this.loadingService.hide();
@@ -67,7 +67,7 @@ export class AuthService {
         this.username.next(credentials.username);
 
         this.toastr.success('Login efetuado com sucesso!', `Seja bem vindo ${credentials.username}!`, {
-          positionClass: 'toast-bottom-right',
+          positionClass: 'toast-top-right',
           timeOut: 3000
         });
         
@@ -79,7 +79,7 @@ export class AuthService {
         if(error.response.status === 401){
           this.toastr.error(error.response.data, '', {
             timeOut: 2000,
-            positionClass: 'toast-bottom-right'
+            positionClass: 'toast-top-right'
           });
         }
         this.isAuthenticated = false;
@@ -94,11 +94,15 @@ export class AuthService {
           this.isAuthenticated = false;
           this.token.next('');
           this.router.navigate(['/login']);
-        })
-        .catch(error => {
-          this.toastr.error(error.response.data, '', {
+          this.toastr.success('Logout realizado com sucesso!', '', {
             timeOut: 2000,
-            positionClass: 'toast-bottom-right'
+            positionClass: 'toast-top-right'
+          });
+        })
+        .catch(() => {
+          this.toastr.error('Falha ao realizar logout! Contate os administradores do sistema.', '', {
+            timeOut: 2000,
+            positionClass: 'toast-top-right'
           });
         })
   }

@@ -10,6 +10,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     provideAnimationsAsync(),
-    provideToastr(),
+    provideToastr({
+      preventDuplicates: true,
+    }),
   ]
 };

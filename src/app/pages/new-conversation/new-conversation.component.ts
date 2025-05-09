@@ -6,15 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CardMessageComponent } from '../../components/card-message/card-message.component';
-import { LoadingDotsComponent } from '../../components/loading-dots/loading-dots.component';
 import { ConversationsService } from '../../services/conversas/conversations.service';
 import { Router } from '@angular/router';
-import { LoadingService } from '../../services/loading/loading.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
 import { ionMenu } from '@ng-icons/ionicons';
 import { DrawerControlService } from '../../services/drawer/drawer-control.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-conversation',
@@ -32,7 +30,7 @@ export class NewConversationComponent {
     private conversasService: ConversationsService,
     private router: Router,
     public authService: AuthService,
-    public drawerControlService: DrawerControlService
+    public drawerControlService: DrawerControlService,
   ) {
     this.messageForm = new FormGroup({
       message: new FormControl('', Validators.required),
