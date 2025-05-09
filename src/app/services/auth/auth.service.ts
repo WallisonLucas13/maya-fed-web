@@ -28,7 +28,7 @@ export class AuthService {
     const url: string = `${environment.apiUrl}${paths.register}`;
     this.loadingService.show();
 
-    axios.post(url, credentials)
+    axios.post(url, credentials, {withCredentials: true})
      .then((response) => {
         this.isAuthenticated = true;
         this.token.next(response.data.token);
@@ -60,7 +60,7 @@ export class AuthService {
     const url: string = `${environment.apiUrl}${paths.login}`;
     this.loadingService.show();
 
-    axios.post(url, credentials)
+    axios.post(url, credentials, {withCredentials: true, })
      .then((response) => {
         this.isAuthenticated = true;
         this.token.next(response.data.token);
@@ -88,9 +88,19 @@ export class AuthService {
   }
 
   logout(): void {
-    this.isAuthenticated = false;
-    this.token.next('');
-    this.router.navigate(['/login']);
+    const url: string = `${environment.apiUrl}${paths.logout}`;
+    axios.delete(url, {withCredentials: true})
+      .then(() => {
+          this.isAuthenticated = false;
+          this.token.next('');
+          this.router.navigate(['/login']);
+        })
+        .catch(error => {
+          this.toastr.error(error.response.data, '', {
+            timeOut: 2000,
+            positionClass: 'toast-bottom-right'
+          });
+        })
   }
 
   isLoggedIn(): boolean {

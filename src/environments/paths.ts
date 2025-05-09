@@ -6,5 +6,6 @@ export const paths = {
     messageWithFiles: '/files/mensagem',
     register: '/auth/register',
     login: '/auth/login',
+    logout: '/auth/logout',
     totalMessagesInsight: '/dashboards/total-messages'
 }

@@ -61,25 +61,25 @@ export class ConversationsService {
 
   public getConversationsPreview(): Promise<AxiosResponse<ConversationPreview[]>> {
     const url: string = `${environment.apiUrl}${paths.conversationsPreview}`;
-    return axios.get<ConversationPreview[]>(url);
+    return axios.get<ConversationPreview[]>(url, {withCredentials: true});
   }
 
   public getConversationPreview(conversationId: string): Promise<AxiosResponse<ConversationPreview>> {
     const url: string = `${environment.apiUrl}${paths.conversationPreview}`;
     const params = {conversationId: conversationId};
-    return axios.get<ConversationPreview>(url, {params: params});
+    return axios.get<ConversationPreview>(url, {params: params, withCredentials: true});
   }
 
   public getConversation(conversationId: string): Promise<AxiosResponse<Conversa>> {
     const url: string = `${environment.apiUrl}${paths.conversation}`;
     const params = {conversationId: conversationId};
-    return axios.get<Conversa>(url, {params: params});
+    return axios.get<Conversa>(url, {params: params, withCredentials: true});
   }
 
   public sendMessage(conversationId: string, message: string): Promise<AxiosResponse<Mensagem>> {
     const url: string = `${environment.apiUrl}${paths.message}`;
     const params = {conversationId: conversationId};
-    return axios.post<Mensagem>(url, {message: message}, {params: params});
+    return axios.post<Mensagem>(url, {message: message}, {params: params, withCredentials: true});
   }
 
   public sendMessageWithFiles(conversationId: string, message: string, file: any): Promise<AxiosResponse<Mensagem>> {
@@ -94,13 +94,14 @@ export class ConversationsService {
       },
       params: {
         conversationId: conversationId
-      }
+      },
+      withCredentials: true
     });
   }
 
   public sendMessageToNewConversation(message: string): Promise<AxiosResponse<Mensagem>> {
     const url: string = `${environment.apiUrl}${paths.message}`;
-    return axios.post<Mensagem>(url, {message: message});
+    return axios.post<Mensagem>(url, {message: message}, {withCredentials: true});
   }
 
   public sendMessageToNewConversationWithFiles(message: string, file: any): Promise<AxiosResponse<Mensagem>> {
@@ -112,7 +113,8 @@ export class ConversationsService {
     return axios.post<Mensagem>(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
-      }
+      },
+      withCredentials: true
     });
   }
 
