@@ -57,7 +57,7 @@ export class LoginComponent {
 
     this.toastr.warning('Preencha todos os campos!', 'Campos inválidos', {
       timeOut: 2000,
-      positionClass: 'toast-bottom-right'
+      positionClass: 'toast-top-right'
     });
   }
 
